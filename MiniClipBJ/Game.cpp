@@ -45,20 +45,14 @@ void Game::Init(uint8_t displayMode, int width, int height, int xpos, int ypos)
 				isRunning = true;
 				if (SDL_SetRenderDrawColor(renderer, 153, 196, 224, 255) != 0) display_SDL_Error_info("SDL_SetRenderDrawColor"); //Light Blue
 			}
-			else
-			{
-				display_SDL_Error_info("SDL_CreateRenderer");
-			}
+			else display_SDL_Error_info("SDL_CreateRenderer");
 		}
-		else
-		{
-			display_SDL_Error_info("SDL_CreateWindow");
-		}
+		else display_SDL_Error_info("SDL_CreateWindow");
+
+		bgTexture = IMG_LoadTexture(renderer, "Assets/Backdrop13.jpg");
+		if (bgTexture == nullptr) display_SDL_Error_info("IMG_LoadTexture");
 	}
-	else
-	{
-		display_SDL_Error_info("SDL_Init");
-	}
+	else display_SDL_Error_info("SDL_Init");
 }
 
 void Game::handleEvents()
@@ -83,11 +77,15 @@ void Game::Update()
 void Game::Render()
 {
 	if (SDL_RenderClear(renderer) != 0) display_SDL_Error_info("SDL_RenderClear");
+
+	SDL_RenderCopy(renderer, bgTexture, NULL, NULL);
+
 	SDL_RenderPresent(renderer);
 }
 
 void Game::Clean()
 {
+	SDL_DestroyTexture(bgTexture);
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();

@@ -29,6 +29,7 @@ private:
 	bool isRunning = false;
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
+	SDL_Texture* bgTexture = nullptr;
 	void display_SDL_Error_info(const char* failedFunction);
 };
 
