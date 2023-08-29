@@ -1,7 +1,5 @@
 #pragma once
-#include "SDL.h"
-#include "SDL_image.h"
-#include <iostream>
+#include "GameObject.h"
 
 #define DEFAULT_WINDOW_WIDTH 1024
 #define DEFAULT_WINDOW_HEIGHT 768
@@ -30,6 +28,7 @@ private:
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 	SDL_Texture* bgTexture = nullptr;
+	GameObject* piece = nullptr;
 	void display_SDL_Error_info(const char* failedFunction);
 };
 

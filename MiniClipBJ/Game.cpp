@@ -51,6 +51,8 @@ void Game::Init(uint8_t displayMode, int width, int height, int xpos, int ypos)
 
 		bgTexture = IMG_LoadTexture(renderer, "Assets/Backdrop13.jpg");
 		if (bgTexture == nullptr) display_SDL_Error_info("IMG_LoadTexture");
+
+		piece = new GameObject(renderer, "Assets/Color-2.png", 50, 50);
 	}
 	else display_SDL_Error_info("SDL_Init");
 }
@@ -71,14 +73,16 @@ void Game::handleEvents()
 
 void Game::Update()
 {
-
+	piece->Update();
 }
 
 void Game::Render()
 {
 	if (SDL_RenderClear(renderer) != 0) display_SDL_Error_info("SDL_RenderClear");
 
-	SDL_RenderCopy(renderer, bgTexture, NULL, NULL);
+	SDL_RenderCopy(renderer, bgTexture, nullptr, nullptr);
+
+	piece->Render();
 
 	SDL_RenderPresent(renderer);
 }
