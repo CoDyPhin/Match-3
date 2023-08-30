@@ -2,11 +2,13 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include <vector>
+#include <string>
+#include <random>
 
 class GameObject
 {
 public:
-	GameObject(const char* texturePath = nullptr, int startX = 0, int startY = 0, int w = 0, int h = 0);
+	GameObject(const char * texturePath = nullptr, int startX = 0, int startY = 0, int w = 0, int h = 0);
 	~GameObject();
 
 	void Update();
@@ -27,10 +29,15 @@ public:
 	int getXPos() { return xPos; }
 	int getYPos() { return yPos; }
 
+	void setParent(GameObject* p) { parent = p; }
+	void addChild(GameObject* c) { children.push_back(c); }
+
 protected:
 	int xPos, yPos, dWidth, dHeight, width, height;
 	float xScale = 1.0f, yScale = 1.0f;
 	SDL_Texture* texture = nullptr;
 	SDL_Rect srcRect, destRect;
+	GameObject* parent = nullptr;
+	std::vector<GameObject*> children;
 };
 

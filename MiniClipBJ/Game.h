@@ -1,6 +1,5 @@
 #pragma once
 #include "GameObject.h"
-#include "Board.h"
 #include <iostream>
 #include <cmath>
 

@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "Board.h"
+
 
 
 SDL_Renderer* Game::renderer = nullptr;
@@ -56,9 +58,7 @@ void Game::Init(uint8_t displayMode, int width, int height, int xpos, int ypos)
 		bgTexture = IMG_LoadTexture(renderer, "Assets/Backdrop13.jpg");
 		if (bgTexture == nullptr) display_SDL_Error_info("IMG_LoadTexture");
 
-		//piece = new GameObject(renderer, "Assets/Color-2.png", 50, 50);
 		Board board = Board(20, 20);
-		gameObjects.push_back(&board);
 	}
 	else display_SDL_Error_info("SDL_Init");
 }
