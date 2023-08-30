@@ -1,21 +1,33 @@
 #include "GameObject.h"
+#include "Game.h"
 
-GameObject::GameObject(SDL_Renderer* ren, const char* texturePath, int startX, int startY)
+GameObject::GameObject(const char* texturePath, int startX, int startY, int w, int h)
 {
-	renderer = ren;
 	xPos = startX;
 	yPos = startY;
 	/*xScale = scaleX;
 	yScale = scaleY;*/
-	texture = IMG_LoadTexture(renderer, texturePath);
-	if (texture == nullptr) std::cout << "IMG_LoadTexture failed. Error: " << SDL_GetError() << std::endl;
-	if(SDL_QueryTexture(texture, nullptr, nullptr, &dWidth, &dHeight) != 0) std::cout << "IMG_QueryTexture failed. Error: " << SDL_GetError() << std::endl;
+	if (texturePath != nullptr) 
+	{
+		texture = IMG_LoadTexture(Game::renderer, texturePath);
+		if (texture == nullptr) std::cout << "IMG_LoadTexture failed. Error: " << SDL_GetError() << std::endl;
+		if (SDL_QueryTexture(texture, nullptr, nullptr, &dWidth, &dHeight) != 0) std::cout << "IMG_QueryTexture failed. Error: " << SDL_GetError() << std::endl;
+	}
+	else
+	{
+		dWidth = w;
+		dHeight = h;
+	}
 	width = dWidth;
 	height = dHeight;
 	srcRect.x = 0;
 	srcRect.y = 0;
 	srcRect.w = width;
 	srcRect.h = height;
+	destRect.x = xPos;
+	destRect.y = yPos;
+	destRect.w = width;
+	destRect.h = height;
 }
 
 GameObject::~GameObject()
@@ -33,7 +45,7 @@ void GameObject::Update()
 
 void GameObject::Render()
 {
-	SDL_RenderCopy(renderer, texture, &srcRect, &destRect);
+	SDL_RenderCopy(Game::renderer, texture, &srcRect, &destRect);
 }
 
 void GameObject::Translate(const int x, const int y)

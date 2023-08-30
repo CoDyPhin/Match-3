@@ -1,5 +1,8 @@
 #pragma once
 #include "GameObject.h"
+#include "Board.h"
+#include <iostream>
+#include <cmath>
 
 #define DEFAULT_WINDOW_WIDTH 1024
 #define DEFAULT_WINDOW_HEIGHT 768
@@ -22,13 +25,13 @@ public:
 	void Clean();
 
 	bool getIsRunning() { return isRunning; }
+	static SDL_Renderer* renderer;
+	static std::vector<GameObject*> gameObjects;
 
 private:
 	bool isRunning = false;
 	SDL_Window* window = nullptr;
-	SDL_Renderer* renderer = nullptr;
 	SDL_Texture* bgTexture = nullptr;
-	GameObject* piece = nullptr;
 	void display_SDL_Error_info(const char* failedFunction);
 };
 

@@ -1,5 +1,9 @@
 #include "Game.h"
 
+
+SDL_Renderer* Game::renderer = nullptr;
+std::vector<GameObject*> Game::gameObjects;
+
 Game::Game()
 {
 	
@@ -52,7 +56,9 @@ void Game::Init(uint8_t displayMode, int width, int height, int xpos, int ypos)
 		bgTexture = IMG_LoadTexture(renderer, "Assets/Backdrop13.jpg");
 		if (bgTexture == nullptr) display_SDL_Error_info("IMG_LoadTexture");
 
-		piece = new GameObject(renderer, "Assets/Color-2.png", 50, 50);
+		//piece = new GameObject(renderer, "Assets/Color-2.png", 50, 50);
+		Board board = Board(20, 20);
+		gameObjects.push_back(&board);
 	}
 	else display_SDL_Error_info("SDL_Init");
 }
@@ -73,7 +79,11 @@ void Game::handleEvents()
 
 void Game::Update()
 {
-	piece->Update();
+	//piece->Update();
+	for (GameObject* element : gameObjects)
+	{
+		element->Update();
+	}
 }
 
 void Game::Render()
@@ -82,7 +92,10 @@ void Game::Render()
 
 	SDL_RenderCopy(renderer, bgTexture, nullptr, nullptr);
 
-	piece->Render();
+	for (GameObject* element : gameObjects)
+	{
+		element->Render();
+	}
 
 	SDL_RenderPresent(renderer);
 }
