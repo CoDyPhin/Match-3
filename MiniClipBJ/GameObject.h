@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <random>
+#include <set>
 
 class GameObject
 {

@@ -7,14 +7,19 @@
 class Board: public GameObject
 {
 public:
-	Board(int startX = 0, int startY = 0, uint8_t r = 8, uint8_t c = 8, int w = 1, int h = 1);
+	Board(int startX = 0, int startY = 0, int r = 8, int c = 8, int w = 1, int h = 1);
 	~Board();
 	int cornerSize, sepSize;
+	std::set<std::pair<int, int>> checkBoard();
 
 private:
-	uint8_t rows, cols;
+	int rows, cols;
 	std::vector<std::vector<Piece*>> board;
 	void drawBorders();
 	void generatePieces();
+
+	void resetVisited();
+
+	int dfs(int x, int y, char color, bool vertical);
 };
 

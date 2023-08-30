@@ -1,19 +1,30 @@
 #include "Board.h"
 
 
-Board::Board(int startX, int startY, uint8_t r, uint8_t c, int w, int h) : GameObject(nullptr, startX, startY, w, h)
+Board::Board(int startX, int startY, int r, int c, int w, int h) : GameObject(nullptr, startX, startY, w, h)
 {
 	rows = r >= 2 ? r : 2;
 	cols = c >= 2 ? c : 2;
 	board.resize(rows, std::vector<Piece*>(cols));
 	drawBorders();
 	generatePieces();
+	checkBoard();
 }
 
 Board::~Board()
 {
 
-}	
+}
+
+void Board::resetVisited()
+{
+	for (auto el : board) for (auto el2 : el) 
+	{
+		el2->setVisited(true, false);
+		el2->setVisited(false, false);
+	}
+}
+
 
 void Board::generatePieces()
 {
@@ -31,6 +42,66 @@ void Board::generatePieces()
 		}
 	}
 }
+
+int Board::dfs(int x, int y, char const color, bool const vertical)
+{
+	if (x < 0 || x >= rows || y < 0 || y >= cols) return 0;
+	if (board[x][y]->getColor() != color) return 0;
+	if (!vertical)
+	{
+		return 1 + dfs(x + 1, y, color, vertical);
+	}
+	else
+	{
+		return 1 + dfs(x, y + 1, color, vertical);
+	}
+}
+
+
+std::set<std::pair<int, int>> Board::checkBoard()
+{
+	std::set<std::pair<int, int>> result;
+
+	for (int row = 0; row < rows; row++)
+	{
+		for (int col = 0; col < cols; col++)
+		{
+			if (!board[row][col]->wasVisited(true))
+			{
+				int const vertical = dfs(row, col, board[row][col]->getColor(), true);
+				std::cout << board[row][col]->getColor() << std::endl;
+				std::cout << "(i, j) = " << row << " " << col << " vertical = " << vertical << std::endl;
+				if (vertical >= 3)
+				{
+					for (int i = col; i < col + vertical; i++)
+					{
+						result.insert(std::make_pair(row, i));
+					}
+				}
+				board[row][col]->setVisited(true, false);
+			}
+			if (!board[row][col]->wasVisited(false))
+			{
+				int const horizontal = dfs(row, col, board[row][col]->getColor(), false);
+				std::cout << "(i, j) = " << row << " " << col << " horizontal = " << horizontal << std::endl;
+				if (horizontal >= 3)
+				{
+					for (int i = row; i < row + horizontal; i++)
+					{
+						result.insert(std::make_pair(i, col));
+					}
+				}
+				board[row][col]->setVisited(false, false);
+			}
+		}
+	}
+	resetVisited();
+	// print all the pairs
+	for (auto const el : result) std::cout << el.first << " " << el.second << std::endl;
+
+	return result;
+}
+
 
 void Board::drawBorders()
 {
