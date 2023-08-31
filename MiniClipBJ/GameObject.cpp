@@ -1,5 +1,4 @@
 #include "GameObject.h"
-#include "Game.h"
 
 GameObject::GameObject(const char* texturePath, int startX, int startY, int w, int h)
 {
@@ -9,7 +8,7 @@ GameObject::GameObject(const char* texturePath, int startX, int startY, int w, i
 	yScale = scaleY;*/
 	if (texturePath != nullptr) 
 	{
-		texture = IMG_LoadTexture(Game::renderer, texturePath);
+		texture = IMG_LoadTexture(Renderer::renderer, texturePath);
 		if (texture == nullptr) std::cout << "IMG_LoadTexture failed. Error: " << SDL_GetError() << std::endl;
 		if (SDL_QueryTexture(texture, nullptr, nullptr, &dWidth, &dHeight) != 0) std::cout << "IMG_QueryTexture failed. Error: " << SDL_GetError() << std::endl;
 	}
@@ -41,11 +40,12 @@ void GameObject::Update()
 	destRect.y = yPos;
 	destRect.w = width;
 	destRect.h = height;
+	if(active) Render();
 }
 
 void GameObject::Render()
 {
-	SDL_RenderCopy(Game::renderer, texture, &srcRect, &destRect);
+	SDL_RenderCopy(Renderer::renderer, texture, &srcRect, &destRect);
 }
 
 void GameObject::Translate(const int x, const int y)

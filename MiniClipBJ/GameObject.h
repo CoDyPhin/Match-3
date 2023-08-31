@@ -1,10 +1,9 @@
 #pragma once
-#include "SDL.h"
-#include "SDL_image.h"
 #include <vector>
 #include <string>
 #include <random>
 #include <set>
+#include "Renderer.h"
 
 class GameObject
 {
@@ -32,10 +31,14 @@ public:
 
 	void setParent(GameObject* p) { parent = p; }
 	void addChild(GameObject* c) { children.push_back(c); }
+	void setActive(bool a) { active = a;}
+	bool isActive() { return active; }
+
 
 protected:
 	int xPos, yPos, dWidth, dHeight, width, height;
 	float xScale = 1.0f, yScale = 1.0f;
+	bool active = true;
 	SDL_Texture* texture = nullptr;
 	SDL_Rect srcRect, destRect;
 	GameObject* parent = nullptr;

@@ -1,22 +1,22 @@
+#include "Renderer.h"
 #include "Game.h"
 
 int main(int argc, char* argv[]) {
-	Game* game = nullptr;
-	game = new Game();
-
 
 	// TODO: ADD CRUD FOR GAME SETTINGS
-	game->Init();
 
+	Renderer* renderer = new Renderer();
 
-	while(game->getIsRunning())
+	Game* game = new Game();
+
+	while(renderer->getIsRunning())
 	{
-		game->handleEvents();
+		renderer->handleEvents();
+		renderer->RenderBackground();
 		game->Update();
-		game->Render();
-	}	
+		renderer->Display();
+	}
 
-	game->Clean();
-
+	renderer->Clean();
 	return 0;
 }

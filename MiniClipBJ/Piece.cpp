@@ -1,10 +1,9 @@
 #include "Piece.h"
 
-
-Piece::Piece(const char color, const int x, const int y, const int boardX, const int boardY) : GameObject((std::string("Assets/Color-") + color + std::string(".png")).c_str(), boardX, boardY) //adicionar offset
+Piece::Piece(const char color, const int x, const int y, const int boardX, const int boardY) : GameObject((std::string("Assets/Color-") + color + std::string(".png")).c_str(), boardX, boardY)
 {
 	this->color = color;
-	Translate(40, 40);
+	Translate(15, 15);
 	moveTo(x, y);
 }
 
@@ -20,7 +19,7 @@ void Piece::moveTo(const int x, const int y)
 		xIndex = x;
 		yIndex = y;
 
-		Translate(xIndex * getWidth() + 10, yIndex * getHeight() + 10);
+		Translate(xPos + xIndex * getWidth(), yPos + yIndex * getHeight());
 	}
 }
 

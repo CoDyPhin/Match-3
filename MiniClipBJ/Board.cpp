@@ -8,12 +8,20 @@ Board::Board(int startX, int startY, int r, int c, int w, int h) : GameObject(nu
 	board.resize(rows, std::vector<Piece*>(cols));
 	drawBorders();
 	generatePieces();
-	checkBoard();
+	auto var = checkBoard();
+	removePieces(var);
 }
 
 Board::~Board()
 {
+	for (auto el : board) for (auto el2 : el) delete el2;
+}
 
+void Board::Update()
+{
+	for (auto el : borders) if(el != nullptr) el->Update();
+	for (auto el : board) for (auto el2 : el) if (el2 != nullptr) el2->Update();
+	//applyGravity();
 }
 
 void Board::resetVisited()
@@ -38,7 +46,7 @@ void Board::generatePieces()
 		{
 			auxPiece = new Piece(std::to_string(dist(generator))[0], x, y, xPos, yPos);
 			board[x][y] = auxPiece;
-			Game::gameObjects.push_back(auxPiece);
+			//Game::gameObjects.push_back(auxPiece);
 		}
 	}
 }
@@ -69,8 +77,6 @@ std::set<std::pair<int, int>> Board::checkBoard()
 			if (!board[row][col]->wasVisited(true))
 			{
 				int const vertical = dfs(row, col, board[row][col]->getColor(), true);
-				std::cout << board[row][col]->getColor() << std::endl;
-				std::cout << "(i, j) = " << row << " " << col << " vertical = " << vertical << std::endl;
 				if (vertical >= 3)
 				{
 					for (int i = col; i < col + vertical; i++)
@@ -83,7 +89,6 @@ std::set<std::pair<int, int>> Board::checkBoard()
 			if (!board[row][col]->wasVisited(false))
 			{
 				int const horizontal = dfs(row, col, board[row][col]->getColor(), false);
-				std::cout << "(i, j) = " << row << " " << col << " horizontal = " << horizontal << std::endl;
 				if (horizontal >= 3)
 				{
 					for (int i = row; i < row + horizontal; i++)
@@ -96,12 +101,40 @@ std::set<std::pair<int, int>> Board::checkBoard()
 		}
 	}
 	resetVisited();
-	// print all the pairs
-	for (auto const el : result) std::cout << el.first << " " << el.second << std::endl;
 
 	return result;
 }
 
+void Board::removePieces(std::set<std::pair<int, int>> const& pieces)
+{
+	for (auto const el : pieces)
+	{
+		//Game::gameObjects.erase(std::remove(Game::gameObjects.begin(), Game::gameObjects.end(), board[el.first][el.second]), Game::gameObjects.end());
+		delete board[el.first][el.second];
+		board[el.first][el.second] = nullptr;
+	}
+}
+
+void Board::applyGravity()
+{
+	for (int x = cols; x >= 0; x--)
+	{
+		for (int y = rows; y >= 0; y--)
+		{
+			if (board[x][y] == nullptr)
+			{
+				for (int i = y; i >= 0; i--)
+				{
+					if (board[x][i] != nullptr)
+					{
+						board[x][i]->moveDown();
+						break;
+					}
+				}
+			}
+		}
+	}
+}
 
 void Board::drawBorders()
 {
@@ -119,7 +152,7 @@ void Board::drawBorders()
 					auxObj = new GameObject("Assets/Extras/topleft.png", xPos, yPos);
 					auxObj->Scale(0.17f);
 					cornerSize = auxObj->getWidth(); // Assuming all corners will be same size and squares
-					Game::gameObjects.push_back(auxObj);
+					borders.emplace_back(auxObj);
 				}
 				else if (col > 0 && col < cols-1)
 				{
@@ -127,14 +160,14 @@ void Board::drawBorders()
 					auxObj->Scale(0.17f);
 					sepSize = auxObj->getWidth(); // Assuming all separators will be same size
 					auxObj->Translate(cornerSize + (col-1) * sepSize, 0);
-					Game::gameObjects.push_back(auxObj);
+					borders.emplace_back(auxObj);
 				}
 				else if (col == cols - 1)
 				{
 					auxObj = new GameObject("Assets/Extras/topright.png", xPos, yPos);
 					auxObj->Scale(0.17f);
 					auxObj->Translate(cornerSize + (col-1) * sepSize, 0);
-					Game::gameObjects.push_back(auxObj);
+					borders.emplace_back(auxObj);
 				}
 			}
 			else if (row == rows-1)
@@ -144,21 +177,21 @@ void Board::drawBorders()
 					auxObj = new GameObject("Assets/Extras/botleft.png", xPos, yPos);
 					auxObj->Scale(0.17f);
 					auxObj->Translate(0, cornerSize + (row-1) * sepSize);
-					Game::gameObjects.push_back(auxObj);
+					borders.emplace_back(auxObj);
 				}
 				else if (col > 0 && col < cols-1)
 				{
-					auxObj = new GameObject("Assets/Extras/horizontal.png", xPos, yPos); // wrong
+					auxObj = new GameObject("Assets/Extras/horizontal.png", xPos, yPos);
 					auxObj->Scale(0.17f);
 					auxObj->Translate(cornerSize + (col-1) * sepSize, cornerSize*1.8 + (row-1) * sepSize);
-					Game::gameObjects.push_back(auxObj);
+					borders.emplace_back(auxObj);
 				}
 				else if (col == cols - 1)
 				{
 					auxObj = new GameObject("Assets/Extras/botright.png", xPos, yPos);
 					auxObj->Scale(0.17f);
 					auxObj->Translate(cornerSize + (col-1) * sepSize, cornerSize + (row-1) * sepSize);
-					Game::gameObjects.push_back(auxObj);
+					borders.emplace_back(auxObj);
 				}
 			}
 			else
@@ -168,17 +201,16 @@ void Board::drawBorders()
 					auxObj = new GameObject("Assets/Extras/vertical.png", xPos, yPos);
 					auxObj->Scale(0.17f);
 					auxObj->Translate(0, cornerSize + (row-1) * sepSize);
-					Game::gameObjects.push_back(auxObj);
+					borders.emplace_back(auxObj);
 				}
 				else if (col == cols - 1)
 				{
 					auxObj = new GameObject("Assets/Extras/vertical.png", xPos, yPos);
 					auxObj->Scale(0.17f);
 					auxObj->Translate(1.8*cornerSize + (col-1) * sepSize, cornerSize + (row-1) * sepSize);
-					Game::gameObjects.push_back(auxObj);
+					borders.emplace_back(auxObj);
 				}
 			}
 		}
 	}
-	
 }

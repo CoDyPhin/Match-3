@@ -135,12 +135,14 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Piece.cpp" />
+    <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Piece.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
