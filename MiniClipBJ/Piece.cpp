@@ -16,7 +16,7 @@ void Piece::moveTo(const int x, const int y, const int vx, const int vy)
 {
 	if(x >= 0 && x < getWidth() && y >= 0 && y < getHeight())
 	{
-		Translate(abs(xIndex - x) * getWidth(), abs(yIndex - y) * getHeight(), vx, vy);
+		Translate((x - xIndex) * (getWidth()+1), (y - yIndex) * (getHeight() + 1), vx, vy);
 		xIndex = x;
 		yIndex = y;
 	}

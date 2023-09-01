@@ -26,10 +26,18 @@ public:
 	void Clean();
 
 	bool getIsRunning() { return isRunning; }
+	int getMouseX() { return mouseX; }
+	int getMouseY() { return mouseY; }
+	//bool getMouseClick() { return mouseClick; }
+	bool mouseIsDragging() { return mouseDrag; }
+	bool buttonWasClicked() { return buttonClicked; }
+	void consumeClick() { buttonClicked = false; }
 
 	static SDL_Renderer* renderer;
 private:
 	bool isRunning = false;
+	int mouseX = 0, mouseY = 0;
+	bool mouseClick = false, mouseDrag = false, buttonClicked = false;
 	SDL_Window* window = nullptr;
 	SDL_Texture* bgTexture = nullptr;
 	void display_SDL_Error_info(const char* failedFunction);

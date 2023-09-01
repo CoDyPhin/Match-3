@@ -11,6 +11,10 @@ public:
 	std::set<std::pair<int, int>> checkBoard();
 	void applyGravity();
 
+	std::pair<int, int> getPieceIndex(int xpos, int ypos);
+	bool areNeighbours(int x1, int y1, int x2, int y2);
+	void swapPieces(int x1, int y1, int x2, int y2);
+
 private:
 	int rows, cols;
 	std::vector<GameObject*> borders;

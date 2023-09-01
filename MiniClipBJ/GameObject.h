@@ -42,7 +42,7 @@ public:
 	bool isActive() { return active; }
 
 	bool isColliding(GameObject* other);
-	bool isColliding(int x, int y, int w, int h);
+	bool isColliding(int x, int y, int w = 1, int h = 1);
 
 protected:
 	int xPos, yPos, dWidth, dHeight, width, height, targetX, targetY, xVel = 0, yVel = 0;

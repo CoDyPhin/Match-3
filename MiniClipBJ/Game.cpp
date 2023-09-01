@@ -12,6 +12,75 @@ Game::~Game()
 
 }
 
+void Game::receiveInput(bool r, bool mC, bool mD, int mX, int mY)
+{
+	isRunning = r;
+	mouseClick = mC;
+	mouseDrag = mD;
+	mouseX = mX;
+	mouseY = mY;
+	handleInput();
+}
+
+void Game::handleInput()
+{
+	if(mouseClick)
+	{
+		if(selectedX == -1 && selectedY == -1)
+		{
+			std::pair<int, int> coords = board->getPieceIndex(mouseX, mouseY);
+			//board->toggleSelected(coords.first, coords.second);
+			selectedX = coords.first;
+			selectedY = coords.second;
+			std::cout << "Selected piece: " << coords.first << ", " << coords.second << std::endl;
+		}
+		else
+		{
+			std::pair<int, int> coords = board->getPieceIndex(mouseX, mouseY);
+			if(selectedX == coords.first && selectedY == coords.second)
+			{
+				std::cout << "De-selected piece: " << coords.first << ", " << coords.second << std::endl;
+				selectedX = -1;
+				selectedY = -1;
+			}
+			else
+			{
+				if(board->areNeighbours(selectedX, selectedY, coords.first, coords.second))
+				{
+					std::cout << "Ola vizinho" << std::endl;
+					board->swapPieces(selectedX, selectedY, coords.first, coords.second);
+					selectedX = -1;
+					selectedY = -1;
+				}
+				else
+				{
+					std::cout << "Selected piece: " << coords.first << ", " << coords.second << std::endl;
+					selectedX = coords.first;
+					selectedY = coords.second;
+				}
+			}
+		}
+	}
+	/*else if (mouseDrag)
+	{
+		std::pair<int, int> coords = board->getPieceIndex(mouseX, mouseY);
+		if(selectedX == -1 && selectedY == -1)
+		{
+			selectedX = coords.first;
+			selectedY = coords.second;
+		}
+		else
+		{
+			if(board->areNeighbours(selectedX, selectedY, coords.first, coords.second))
+			{
+				board->swapPieces(selectedX, selectedY, coords.first, coords.second);
+				selectedX = -1;
+				selectedY = -1;
+			}
+		}
+	}*/
+}
+
 
 void Game::Update()
 {

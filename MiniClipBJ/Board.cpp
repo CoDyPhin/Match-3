@@ -14,7 +14,7 @@ Board::Board(int startX, int startY, int r, int c, int w, int h) : GameObject(nu
 	{
 		removePieces(var);
 		applyGravity();
-		fill = fillTop(true);
+		fill = fillTop();
 		var = checkBoard();
 	}
 	pushToBuffer();
@@ -42,7 +42,6 @@ void Board::Update()
 {
 	pushToBuffer();
 	auto var = checkBoard();
-	//if(var.empty()) return;
 	removePieces(var);
 	applyGravity();
 	/*if(*/fillTop(true)/* > 0) std::this_thread::sleep_for(std::chrono::milliseconds(2000))*/;
@@ -201,6 +200,63 @@ void Board::applyGravity()
 	}
 }
 
+std::pair<int, int> Board::getPieceIndex(int xpos, int ypos)
+{
+	std::pair<int, int> result = std::make_pair(-1, -1);
+	for (int x = 0; x < cols; x++)
+	{
+		for (int y = 0; y < rows; y++)
+		{
+			if (board[x][y] != nullptr && board[x][y]->isColliding(xpos, ypos))
+			{
+				result = std::make_pair(x, y);
+				break;
+			}
+		}
+	}
+	return result;
+}
+
+bool Board::areNeighbours(int x1, int y1, int x2, int y2)
+{
+	return x1 >= 0 && x2 >= 0 && 
+		y1 >= 0 && y2 >= 0 && 
+		x1 < rows && x2 < rows && 
+		y1 < cols && y2 < cols && 
+		((abs(x1 - x2) == 1) != (abs(y1 - y2) == 1));
+}
+
+
+void Board::swapPieces(int x1, int y1, int x2, int y2)
+{
+	std::cout << "(" << x1 << ", " << y1 << ") pos " << board[x1][y1]->getXPos() << ", " << board[x1][y1]->getYPos() << std::endl;
+	std::cout << "(" << x2 << ", " << y2 << ") pos " << board[x2][y2]->getXPos() << ", " << board[x2][y2]->getYPos() << std::endl;
+	Piece* piece1 = board[x1][y1];
+	Piece* piece2 = board[x2][y2];
+
+	board[x1][y1] = piece2;
+	board[x2][y2] = piece1;
+	piece1->moveTo(x2, y2);
+	piece2->moveTo(x1, y1);
+	if(checkBoard().empty())
+	{
+		std::cout << "Invalid move" << std::endl;
+		board[x1][y1] = piece1;
+		board[x2][y2] = piece2;
+		piece1->moveTo(x1, y1, 1, 1);
+		piece2->moveTo(x2, y2, 1, 1);
+		std::cout << "(" << x1 << ", " << y1 << ") pos " << board[x1][y1]->getXPos() << ", " << board[x1][y1]->getYPos() << std::endl;
+		std::cout << "(" << x2 << ", " << y2 << ") pos " << board[x2][y2]->getXPos() << ", " << board[x2][y2]->getYPos() << std::endl;
+	}
+	else
+	{
+				std::cout << "Valid move" << std::endl;
+	}
+	
+}
+
+
+
 void Board::drawBorders()
 {
 	GameObject* auxObj = nullptr;
@@ -279,3 +335,5 @@ void Board::drawBorders()
 		}
 	}
 }
+
+

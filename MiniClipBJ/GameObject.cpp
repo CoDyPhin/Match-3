@@ -121,6 +121,6 @@ bool GameObject::isColliding(GameObject* other)
 
 bool GameObject::isColliding(const int x, const int y, const int w, const int h)
 {
-	return xPos + width > x && x + w > xPos && yPos + height > y && y + h > yPos;
+	return xPos + width >= x && x + w >= xPos && yPos + height >= y && y + h >= yPos;
 }
 
