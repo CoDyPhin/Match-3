@@ -15,9 +15,14 @@ private:
 	int rows, cols;
 	std::vector<GameObject*> borders;
 	std::vector<std::vector<Piece*>> board;
+
 	void removePieces(std::set<std::pair<int, int>> const& pieces);
 	void drawBorders();
 	void generatePieces();
+
+	void pushToBuffer();
+
+	int fillTop();
 
 	void resetVisited();
 

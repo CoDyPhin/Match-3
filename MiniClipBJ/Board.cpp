@@ -8,31 +8,74 @@ Board::Board(int startX, int startY, int r, int c, int w, int h) : GameObject(nu
 	board.resize(rows, std::vector<Piece*>(cols));
 	drawBorders();
 	generatePieces();
-	auto var = checkBoard();
-	removePieces(var);
+	std::set<std::pair<int, int>> var = checkBoard();
+	int fill = 0;
+	while (!var.empty() || fill > 0)
+	{
+		removePieces(var);
+		applyGravity();
+		fill = fillTop();
+		var = checkBoard();
+	}
+	
+	pushToBuffer();
 }
 
 Board::~Board()
 {
+	for (auto el : borders) delete el;
 	for (auto el : board) for (auto el2 : el) delete el2;
+}
+
+void Board::pushToBuffer()
+{
+	for (auto el : borders) {
+		if (el != nullptr) el->Update();
+	}
+	for (auto el : board) {
+		for (auto el2 : el) {
+			if (el2 != nullptr) el2->Update();
+		}
+	}
 }
 
 void Board::Update()
 {
-	for (auto el : borders) if(el != nullptr) el->Update();
-	for (auto el : board) for (auto el2 : el) if (el2 != nullptr) el2->Update();
-	//applyGravity();
+	pushToBuffer();
+	auto var = checkBoard();
+	if(var.empty()) return;
+	removePieces(var);
+	applyGravity();
+	/*if(*/fillTop()/* > 0) std::this_thread::sleep_for(std::chrono::milliseconds(2000))*/;
 }
 
 void Board::resetVisited()
 {
 	for (auto el : board) for (auto el2 : el) 
 	{
-		el2->setVisited(true, false);
-		el2->setVisited(false, false);
+		if (el2 != nullptr) {
+			el2->setVisited(true, false);
+			el2->setVisited(false, false);
+		}
 	}
 }
 
+int Board::fillTop()
+{
+	int count = 0;
+	std::random_device rd;
+	std::mt19937 generator(rd());
+	std::uniform_int_distribution<> dist(1, 5);
+	for (int x = 0; x < cols; x++)
+	{
+		if (board[x][0] == nullptr)
+		{
+			count++;
+			board[x][0] = new Piece(std::to_string(dist(generator))[0], x, 0, xPos, yPos);
+		}
+	}
+	return count;
+}
 
 void Board::generatePieces()
 {
@@ -46,7 +89,6 @@ void Board::generatePieces()
 		{
 			auxPiece = new Piece(std::to_string(dist(generator))[0], x, y, xPos, yPos);
 			board[x][y] = auxPiece;
-			//Game::gameObjects.push_back(auxPiece);
 		}
 	}
 }
@@ -54,7 +96,7 @@ void Board::generatePieces()
 int Board::dfs(int x, int y, char const color, bool const vertical)
 {
 	if (x < 0 || x >= rows || y < 0 || y >= cols) return 0;
-	if (board[x][y]->getColor() != color) return 0;
+	if (board[x][y]==nullptr || board[x][y]->getColor() != color) return 0;
 	if (!vertical)
 	{
 		return 1 + dfs(x + 1, y, color, vertical);
@@ -74,6 +116,7 @@ std::set<std::pair<int, int>> Board::checkBoard()
 	{
 		for (int col = 0; col < cols; col++)
 		{
+			if(board[row][col] == nullptr) continue;
 			if (!board[row][col]->wasVisited(true))
 			{
 				int const vertical = dfs(row, col, board[row][col]->getColor(), true);
@@ -117,17 +160,20 @@ void Board::removePieces(std::set<std::pair<int, int>> const& pieces)
 
 void Board::applyGravity()
 {
-	for (int x = cols; x >= 0; x--)
+	for (int x = cols - 1; x >= 0; x--)
 	{
-		for (int y = rows; y >= 0; y--)
+		for (int y = rows - 1; y >= 0; y--)
 		{
 			if (board[x][y] == nullptr)
 			{
-				for (int i = y; i >= 0; i--)
+				for (int i = y - 1; i >= 0; i--)
 				{
 					if (board[x][i] != nullptr)
 					{
-						board[x][i]->moveDown();
+						board[x][i]->moveTo(x,y);
+						board[x][y] = board[x][i];
+						board[x][i] = nullptr;
+						//std::cout << "Moving down " << x << " " << i << std::endl;
 						break;
 					}
 				}

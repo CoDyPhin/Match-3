@@ -3,6 +3,8 @@
 #include <string>
 #include <random>
 #include <set>
+#include <chrono>
+#include <thread>
 #include "Renderer.h"
 
 class GameObject
