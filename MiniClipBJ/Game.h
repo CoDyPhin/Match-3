@@ -14,6 +14,8 @@ public:
 private:
 	Board* board = nullptr;
 	int mouseX = 0, mouseY = 0, selectedX = -1, selectedY = -1;
-	bool mouseClick = false, mouseDrag = false, isRunning = false;
+	bool mouseClick = false, mouseDrag = false, isRunning = false, wasDragging = false, failedMove = false;
+
+	bool canUserInput();
 };
 

@@ -227,10 +227,10 @@ bool Board::areNeighbours(int x1, int y1, int x2, int y2)
 }
 
 
-void Board::swapPieces(int x1, int y1, int x2, int y2)
+bool Board::swapPieces(int x1, int y1, int x2, int y2)
 {
-	std::cout << "(" << x1 << ", " << y1 << ") pos " << board[x1][y1]->getXPos() << ", " << board[x1][y1]->getYPos() << std::endl;
-	std::cout << "(" << x2 << ", " << y2 << ") pos " << board[x2][y2]->getXPos() << ", " << board[x2][y2]->getYPos() << std::endl;
+	//std::cout << "(" << x1 << ", " << y1 << ") pos " << board[x1][y1]->getXPos() << ", " << board[x1][y1]->getYPos() << std::endl;
+	//std::cout << "(" << x2 << ", " << y2 << ") pos " << board[x2][y2]->getXPos() << ", " << board[x2][y2]->getYPos() << std::endl;
 	Piece* piece1 = board[x1][y1];
 	Piece* piece2 = board[x2][y2];
 
@@ -240,21 +240,31 @@ void Board::swapPieces(int x1, int y1, int x2, int y2)
 	piece2->moveTo(x1, y1);
 	if(checkBoard().empty())
 	{
-		std::cout << "Invalid move" << std::endl;
+		//std::cout << "Invalid move" << std::endl;
 		board[x1][y1] = piece1;
 		board[x2][y2] = piece2;
 		piece1->moveTo(x1, y1, 1, 1);
 		piece2->moveTo(x2, y2, 1, 1);
-		std::cout << "(" << x1 << ", " << y1 << ") pos " << board[x1][y1]->getXPos() << ", " << board[x1][y1]->getYPos() << std::endl;
-		std::cout << "(" << x2 << ", " << y2 << ") pos " << board[x2][y2]->getXPos() << ", " << board[x2][y2]->getYPos() << std::endl;
+		//std::cout << "(" << x1 << ", " << y1 << ") pos " << board[x1][y1]->getXPos() << ", " << board[x1][y1]->getYPos() << std::endl;
+		//std::cout << "(" << x2 << ", " << y2 << ") pos " << board[x2][y2]->getXPos() << ", " << board[x2][y2]->getYPos() << std::endl;
+		return true;
 	}
-	else
-	{
-				std::cout << "Valid move" << std::endl;
-	}
-	
+	return false;
 }
 
+bool Board::isMoving()
+{
+	for (auto pieces : board)
+	{
+		for (auto piece : pieces)
+		{
+			if (piece == nullptr || (piece->getXVel() != 0 || piece->getYVel() != 0))
+			{
+				return true;
+			}
+		}
+	}
+}
 
 
 void Board::drawBorders()

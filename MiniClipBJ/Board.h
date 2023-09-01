@@ -13,7 +13,8 @@ public:
 
 	std::pair<int, int> getPieceIndex(int xpos, int ypos);
 	bool areNeighbours(int x1, int y1, int x2, int y2);
-	void swapPieces(int x1, int y1, int x2, int y2);
+	bool swapPieces(int x1, int y1, int x2, int y2);
+	bool isMoving();
 
 private:
 	int rows, cols;

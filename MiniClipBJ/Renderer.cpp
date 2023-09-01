@@ -80,8 +80,10 @@ void Renderer::handleEvents()
 		break;
 	case SDL_MOUSEBUTTONUP:
 		if (event.button.button == SDL_BUTTON_LEFT) {
+			if (!mouseDrag) {
+				buttonClicked = true;
+			}
 			mouseDrag = false;
-			buttonClicked = true;
 			mouseClick = false;
 			//std::cout << "Mouse Released" << std::endl;
 		}
