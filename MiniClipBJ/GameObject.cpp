@@ -4,8 +4,8 @@ GameObject::GameObject(const char* texturePath, int startX, int startY, int w, i
 {
 	xPos = startX;
 	yPos = startY;
-	/*xScale = scaleX;
-	yScale = scaleY;*/
+	targetX = xPos;
+	targetY = yPos;
 	if (texturePath != nullptr) 
 	{
 		texture = IMG_LoadTexture(Renderer::renderer, texturePath);
@@ -36,6 +36,7 @@ GameObject::~GameObject()
 
 void GameObject::Update()
 {
+	Move();
 	destRect.x = xPos;
 	destRect.y = yPos;
 	destRect.w = width;
@@ -48,14 +49,50 @@ void GameObject::Render()
 	SDL_RenderCopy(Renderer::renderer, texture, &srcRect, &destRect);
 }
 
-void GameObject::Translate(const int x, const int y)
+void GameObject::Translate(const int x, const int y, const int vx, const int vy)
 {
-	xPos += x;
-	yPos += y;
+	targetX += x;
+	targetY += y;
+	if (vx > 0) xVel = vx;
+	else {
+		xVel = abs(x);
+		Move();
+	}
+	if (vy > 0) yVel = vy;
+	else {
+		yVel = abs(y);
+		Move();
+	}
+}
+
+void GameObject::Move()
+{
+
+	if (xPos < targetX)
+	{
+		xPos = xPos + xVel > targetX ? targetX : xPos + xVel;
+	}
+	else if (xPos > targetX)
+	{
+		xPos = xPos - xVel < targetX ? targetX : xPos - xVel;
+	}
+	else xVel = 0;
+
+	if (yPos < targetY)
+	{
+		yPos = yPos + yVel > targetY ? targetY : yPos + yVel;
+	}
+	else if (yPos > targetY)
+	{
+		yPos = yPos - yVel < targetY ? targetY : yPos - yVel;
+	}
+	else yVel = 0;
 }
 
 void GameObject::setPosition(const int x, const int y)
 {
+	targetX = x;
+	targetY = y;
 	xPos = x;
 	yPos = y;
 }
@@ -76,4 +113,14 @@ void GameObject::Scale(const float xFactor, const float yFactor)
 	height = static_cast<int>(std::floor(dHeight*yFactor));
 }
 
+
+bool GameObject::isColliding(GameObject* other)
+{
+	return xPos + width > other->xPos && other->xPos + other->width > xPos && yPos + height > other->yPos && other->yPos + other->height > yPos;
+}
+
+bool GameObject::isColliding(const int x, const int y, const int w, const int h)
+{
+	return xPos + width > x && x + w > xPos && yPos + height > y && y + h > yPos;
+}
 

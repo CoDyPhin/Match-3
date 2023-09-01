@@ -11,7 +11,7 @@ public:
 	int getYIndex() { return yIndex; }
 	char getColor() { return color; }
 
-	void moveTo(int x, int y);
+	void moveTo(int x, int y, int vx = 0, int vy = 0);
 	/*void moveLeft() { moveTo(xIndex - 1, yIndex); }
 	void moveRight() { moveTo(xIndex + 1, yIndex); }
 	void moveUp() { moveTo(xIndex, yIndex - 1); }

@@ -22,7 +22,7 @@ private:
 
 	void pushToBuffer();
 
-	int fillTop();
+	int fillTop(bool wait = false);
 
 	void resetVisited();
 

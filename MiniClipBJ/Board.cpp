@@ -14,10 +14,9 @@ Board::Board(int startX, int startY, int r, int c, int w, int h) : GameObject(nu
 	{
 		removePieces(var);
 		applyGravity();
-		fill = fillTop();
+		fill = fillTop(true);
 		var = checkBoard();
 	}
-	
 	pushToBuffer();
 }
 
@@ -43,10 +42,10 @@ void Board::Update()
 {
 	pushToBuffer();
 	auto var = checkBoard();
-	if(var.empty()) return;
+	//if(var.empty()) return;
 	removePieces(var);
 	applyGravity();
-	/*if(*/fillTop()/* > 0) std::this_thread::sleep_for(std::chrono::milliseconds(2000))*/;
+	/*if(*/fillTop(true)/* > 0) std::this_thread::sleep_for(std::chrono::milliseconds(2000))*/;
 }
 
 void Board::resetVisited()
@@ -60,7 +59,7 @@ void Board::resetVisited()
 	}
 }
 
-int Board::fillTop()
+int Board::fillTop(bool wait)
 {
 	int count = 0;
 	std::random_device rd;
@@ -70,8 +69,29 @@ int Board::fillTop()
 	{
 		if (board[x][0] == nullptr)
 		{
-			count++;
-			board[x][0] = new Piece(std::to_string(dist(generator))[0], x, 0, xPos, yPos);
+			if(wait)
+			{
+				auto aux = new Piece(std::to_string(dist(generator))[0], x, 0, xPos, yPos);
+				bool spawn = true;
+				for (int y = 1; y < rows; y++)
+				{
+					if(board[x][y] != nullptr && aux->isColliding(board[x][y]))
+					{
+						spawn = false;
+						break;
+					}
+				}
+				if (spawn) {
+					board[x][0] = aux;
+					count++;
+				}
+				else delete aux;
+			}
+			else
+			{
+				board[x][0] = new Piece(std::to_string(dist(generator))[0], x, 0, xPos, yPos);
+				count++;
+			}
 		}
 	}
 	return count;
@@ -152,7 +172,6 @@ void Board::removePieces(std::set<std::pair<int, int>> const& pieces)
 {
 	for (auto const el : pieces)
 	{
-		//Game::gameObjects.erase(std::remove(Game::gameObjects.begin(), Game::gameObjects.end(), board[el.first][el.second]), Game::gameObjects.end());
 		delete board[el.first][el.second];
 		board[el.first][el.second] = nullptr;
 	}
@@ -170,7 +189,7 @@ void Board::applyGravity()
 				{
 					if (board[x][i] != nullptr)
 					{
-						board[x][i]->moveTo(x,y);
+						board[x][i]->moveTo(x,y,0,1);
 						board[x][y] = board[x][i];
 						board[x][i] = nullptr;
 						//std::cout << "Moving down " << x << " " << i << std::endl;

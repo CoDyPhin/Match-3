@@ -12,11 +12,11 @@ Piece::~Piece()
 	
 }
 
-void Piece::moveTo(const int x, const int y)
+void Piece::moveTo(const int x, const int y, const int vx, const int vy)
 {
 	if(x >= 0 && x < getWidth() && y >= 0 && y < getHeight())
 	{
-		Translate(abs(xIndex-x) * getWidth(), abs(yIndex-y) * getHeight()); // TODO: change to setPosition instead of Translate
+		Translate(abs(xIndex - x) * getWidth(), abs(yIndex - y) * getHeight(), vx, vy);
 		xIndex = x;
 		yIndex = y;
 	}
