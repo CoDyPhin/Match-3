@@ -17,14 +17,14 @@ bool Game::canUserInput()
 	return !board->isMoving();
 }
 
-void Game::receiveInput(bool r, bool mC, bool mD, int mX, int mY)
+void Game::processInput(bool r, bool mC, bool mD, int mX, int mY)
 {
 	isRunning = r;
 	mouseClick = mC;
 	mouseDrag = mD;
 	mouseX = mX;
 	mouseY = mY;
-	if(!canUserInput()) handleInput();
+	if(canUserInput()) handleInput();
 }
 
 void Game::handleInput()
@@ -85,6 +85,7 @@ void Game::handleInput()
 					selectedX = -1;
 					selectedY = -1;
 				}
+
 			}
 			wasDragging = true;
 		}
@@ -99,6 +100,7 @@ void Game::handleInput()
 			selectedY = -1;
 		}
 	}
+	board->toggleSelected(selectedX, selectedY);
 }
 
 

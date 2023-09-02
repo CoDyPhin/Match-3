@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
 	{
 		//std::this_thread::sleep_for(std::chrono::milliseconds(25));
 		renderer->handleEvents();
-		game->receiveInput(renderer->getIsRunning(), renderer->buttonWasClicked(), renderer->mouseIsDragging(), renderer->getMouseX(), renderer->getMouseY());
+		game->processInput(renderer->getIsRunning(), renderer->buttonWasClicked(), renderer->mouseIsDragging(), renderer->getMouseX(), renderer->getMouseY());
 		renderer->consumeClick();
 		renderer->RenderBackground();
 		game->Update();

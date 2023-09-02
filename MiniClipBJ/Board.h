@@ -15,11 +15,15 @@ public:
 	bool areNeighbours(int x1, int y1, int x2, int y2);
 	bool swapPieces(int x1, int y1, int x2, int y2);
 	bool isMoving();
+	void toggleSelected(int x, int y);
 
 private:
 	int rows, cols;
 	std::vector<GameObject*> borders;
 	std::vector<std::vector<Piece*>> board;
+
+	GameObject* selectedSprite;
+
 
 	void removePieces(std::set<std::pair<int, int>> const& pieces);
 	void drawBorders();

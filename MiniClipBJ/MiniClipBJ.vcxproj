@@ -104,12 +104,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Utilizador\Desktop\boring stuff\MiniClip\SDL\SDL2_image-2.6.3\include;C:\Users\Utilizador\Desktop\boring stuff\MiniClip\SDL\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Others\boring stuff\MiniClip\SDL\SDL2_image-2.6.3\include;F:\Others\boring stuff\MiniClip\SDL\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Utilizador\Desktop\boring stuff\MiniClip\SDL\SDL2_image-2.6.3\lib\x64;C:\Users\Utilizador\Desktop\boring stuff\MiniClip\SDL\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>F:\Others\boring stuff\MiniClip\SDL\SDL2\lib\x64;F:\Others\boring stuff\MiniClip\SDL\SDL2_image-2.6.3\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

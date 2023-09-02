@@ -8,7 +8,7 @@ public:
 	~Game();
 
 	void Update();
-	void receiveInput(bool r, bool mC, bool mD, int mX, int mY);
+	void processInput(bool r, bool mC, bool mD, int mX, int mY);
 	void handleInput();
 
 private:

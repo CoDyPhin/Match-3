@@ -8,6 +8,9 @@ Board::Board(int startX, int startY, int r, int c, int w, int h) : GameObject(nu
 	board.resize(rows, std::vector<Piece*>(cols));
 	drawBorders();
 	generatePieces();
+	selectedSprite = new GameObject("Assets/Extras/selected.png");
+	selectedSprite->setActive(false);
+	selectedSprite->Scale(0.15f);
 	std::set<std::pair<int, int>> var = checkBoard();
 	int fill = 0;
 	while (!var.empty() || fill > 0)
@@ -36,6 +39,7 @@ void Board::pushToBuffer()
 			if (el2 != nullptr) el2->Update();
 		}
 	}
+	selectedSprite->Update();
 }
 
 void Board::Update()
@@ -200,6 +204,34 @@ void Board::applyGravity()
 	}
 }
 
+void Board::toggleSelected(int x, int y)
+{
+	int width = -1, height = -1;
+
+	for(int i = 0; i < cols; i++)
+	{
+		for(int j = 0; j < rows; j++)
+		{
+			if(board[i][j] != nullptr)
+			{
+				width = board[i][j]->getWidth();
+				height = board[i][j]->getHeight();
+				break;
+			}
+		}
+		if(width != -1 && height != -1) break;
+	}
+	if(x == -1 || y == -1)
+	{
+		selectedSprite->setActive(false);
+	}
+	else {
+		selectedSprite->setPosition(32 + xPos + x * (width + 5), 32 + yPos + y * (height + 5));
+		selectedSprite->setActive(true);
+	}
+}
+
+
 std::pair<int, int> Board::getPieceIndex(int xpos, int ypos)
 {
 	std::pair<int, int> result = std::make_pair(-1, -1);
@@ -222,8 +254,9 @@ bool Board::areNeighbours(int x1, int y1, int x2, int y2)
 	return x1 >= 0 && x2 >= 0 && 
 		y1 >= 0 && y2 >= 0 && 
 		x1 < rows && x2 < rows && 
-		y1 < cols && y2 < cols && 
-		((abs(x1 - x2) == 1) != (abs(y1 - y2) == 1));
+		y1 < cols && y2 < cols &&
+		(abs(x1 - x2) + abs(y1 - y2) == 1);
+
 }
 
 
@@ -258,12 +291,13 @@ bool Board::isMoving()
 	{
 		for (auto piece : pieces)
 		{
-			if (piece == nullptr || (piece->getXVel() != 0 || piece->getYVel() != 0))
+			if (piece == nullptr || piece->getXVel() != 0 || piece->getYVel() != 0)
 			{
 				return true;
 			}
 		}
 	}
+	return false;
 }
 
 
