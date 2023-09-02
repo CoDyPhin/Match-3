@@ -17,6 +17,8 @@ public:
 	bool isMoving();
 	void toggleSelected(int x, int y);
 
+	int getScore() { return score; }
+
 private:
 	int rows, cols;
 	std::vector<GameObject*> borders;
@@ -24,12 +26,15 @@ private:
 
 	GameObject* selectedSprite;
 
+	int score = 0;
 
 	void removePieces(std::set<std::pair<int, int>> const& pieces);
 	void drawBorders();
 	void generatePieces();
 
-	void pushToBuffer();
+	void updateChildren();
+	int calculateScore(int pieces);
+	void addScore(int pieces);
 
 	int fillTop(bool wait = false);
 

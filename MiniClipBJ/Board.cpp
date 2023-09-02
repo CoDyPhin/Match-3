@@ -20,7 +20,7 @@ Board::Board(int startX, int startY, int r, int c, int w, int h) : GameObject(nu
 		fill = fillTop();
 		var = checkBoard();
 	}
-	pushToBuffer();
+	updateChildren();
 }
 
 Board::~Board()
@@ -29,7 +29,7 @@ Board::~Board()
 	for (auto el : board) for (auto el2 : el) delete el2;
 }
 
-void Board::pushToBuffer()
+void Board::updateChildren()
 {
 	for (auto el : borders) {
 		if (el != nullptr) el->Update();
@@ -42,13 +42,30 @@ void Board::pushToBuffer()
 	selectedSprite->Update();
 }
 
+int Board::calculateScore(int pieces)
+{
+	return pieces <= 3 ? 10 * pieces : calculateScore(pieces - 1) + 10 * (pieces - 2);
+}
+
+void Board::addScore(int pieces)
+{
+	int aux = calculateScore(pieces);
+	std::cout << "Added " << aux << " points" << std::endl;
+	score += aux;
+}
+
+
 void Board::Update()
 {
-	pushToBuffer();
-	auto var = checkBoard();
-	removePieces(var);
+	updateChildren();
+	auto const var = checkBoard();
+	if (!var.empty()) {
+		addScore(var.size());
+		removePieces(var);
+		std::cout << "Score: " << score << std::endl;
+	}
 	applyGravity();
-	/*if(*/fillTop(true)/* > 0) std::this_thread::sleep_for(std::chrono::milliseconds(2000))*/;
+	fillTop(true);
 }
 
 void Board::resetVisited()
@@ -262,8 +279,6 @@ bool Board::areNeighbours(int x1, int y1, int x2, int y2)
 
 bool Board::swapPieces(int x1, int y1, int x2, int y2)
 {
-	//std::cout << "(" << x1 << ", " << y1 << ") pos " << board[x1][y1]->getXPos() << ", " << board[x1][y1]->getYPos() << std::endl;
-	//std::cout << "(" << x2 << ", " << y2 << ") pos " << board[x2][y2]->getXPos() << ", " << board[x2][y2]->getYPos() << std::endl;
 	Piece* piece1 = board[x1][y1];
 	Piece* piece2 = board[x2][y2];
 
@@ -273,13 +288,10 @@ bool Board::swapPieces(int x1, int y1, int x2, int y2)
 	piece2->moveTo(x1, y1);
 	if(checkBoard().empty())
 	{
-		//std::cout << "Invalid move" << std::endl;
 		board[x1][y1] = piece1;
 		board[x2][y2] = piece2;
 		piece1->moveTo(x1, y1, 1, 1);
 		piece2->moveTo(x2, y2, 1, 1);
-		//std::cout << "(" << x1 << ", " << y1 << ") pos " << board[x1][y1]->getXPos() << ", " << board[x1][y1]->getYPos() << std::endl;
-		//std::cout << "(" << x2 << ", " << y2 << ") pos " << board[x2][y2]->getXPos() << ", " << board[x2][y2]->getYPos() << std::endl;
 		return true;
 	}
 	return false;
