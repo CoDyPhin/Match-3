@@ -41,6 +41,11 @@ void GameObject::Update()
 	destRect.y = yPos;
 	destRect.w = width;
 	destRect.h = height;
+	if(hovered)
+	{
+		SDL_RenderDrawRect(Renderer::renderer, &destRect);
+		hovered = false;
+	}
 	if(active) Render();
 }
 

@@ -36,7 +36,7 @@ Renderer::Renderer(uint8_t displayMode, int width, int height, int xpos, int ypo
 			if (renderer)
 			{
 				isRunning = true;
-				if (SDL_SetRenderDrawColor(renderer, 153, 196, 224, 255) != 0) display_SDL_Error_info("SDL_SetRenderDrawColor"); //Light Blue
+				if (SDL_SetRenderDrawColor(renderer, 57, 255, 20, 255) != 0) display_SDL_Error_info("SDL_SetRenderDrawColor"); // Gold
 			}
 			else display_SDL_Error_info("SDL_CreateRenderer");
 		}

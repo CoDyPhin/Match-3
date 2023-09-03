@@ -29,26 +29,23 @@ void Game::processInput(bool r, bool mC, bool mD, int mX, int mY)
 
 void Game::handleInput()
 {
-	if(mouseClick)
+
+	std::pair<int, int> coords = board->getPieceIndex(mouseX, mouseY);
+	if(mouseClick) // clicked
 	{
-		if(selectedX == -1 && selectedY == -1)
+		if(selectedX == -1 && selectedY == -1) // nothing selected, select
 		{
-			std::pair<int, int> coords = board->getPieceIndex(mouseX, mouseY);
-			//board->toggleSelected(coords.first, coords.second);
 			selectedX = coords.first;
 			selectedY = coords.second;
-			//std::cout << "Selected piece: " << coords.first << ", " << coords.second << std::endl;
 		}
-		else
+		else // something selected
 		{
-			std::pair<int, int> coords = board->getPieceIndex(mouseX, mouseY);
-			if(selectedX == coords.first && selectedY == coords.second)
+			if(selectedX == coords.first && selectedY == coords.second) // clicked the same piece, deselect
 			{
-				//std::cout << "De-selected piece: " << coords.first << ", " << coords.second << std::endl;
 				selectedX = -1;
 				selectedY = -1;
 			}
-			else
+			else // clicked another piece, play
 			{
 				if(board->areNeighbours(selectedX, selectedY, coords.first, coords.second))
 				{
@@ -58,49 +55,39 @@ void Game::handleInput()
 				}
 				else
 				{
-					//std::cout << "Selected piece: " << coords.first << ", " << coords.second << std::endl;
 					selectedX = coords.first;
 					selectedY = coords.second;
 				}
 			}
 		}
 	}
-	else if (mouseDrag)
+	else if (mouseDrag && !wasDragging) // started dragging
 	{
-		if (!failedMove) {
-			std::pair<int, int> coords = board->getPieceIndex(mouseX, mouseY);
-			if (selectedX == -1 && selectedY == -1)
-			{
-				if(!wasDragging)
-				{
-					selectedX = coords.first;
-					selectedY = coords.second;
-				}
-			}
-			else
-			{
-				if (board->areNeighbours(selectedX, selectedY, coords.first, coords.second))
-				{
-					failedMove = board->swapPieces(selectedX, selectedY, coords.first, coords.second);
-					selectedX = -1;
-					selectedY = -1;
-				}
-
-			}
-			wasDragging = true;
-		}
+		wasDragging = true;
+		selectedX = coords.first;
+		selectedY = coords.second;
+		
 	}
-	else
+	else if(wasDragging && !mouseDrag) // ended dragging
 	{
-		if(wasDragging)
+		wasDragging = false;
+		if(!(selectedX == coords.first && selectedY == coords.second))
 		{
-			wasDragging = false;
-			failedMove = false;
-			selectedX = -1;
-			selectedY = -1;
+			if (board->areNeighbours(selectedX, selectedY, coords.first, coords.second))
+			{
+				if(!board->swapPieces(selectedX, selectedY, coords.first, coords.second))
+				{
+					selectedY = -1;
+					selectedX = -1;
+				}
+			}
 		}
 	}
 	board->toggleSelected(selectedX, selectedY);
+	if (coords.first != -1 && coords.second != -1)
+	{
+		board->hovering(coords.first, coords.second);
+	}
 }
 
 

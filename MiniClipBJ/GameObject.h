@@ -44,10 +44,12 @@ public:
 	bool isColliding(GameObject* other);
 	bool isColliding(int x, int y, int w = 1, int h = 1);
 
+	void setHovered(bool hover) { hovered = hover; }
+
 protected:
 	int xPos, yPos, dWidth, dHeight, width, height, targetX, targetY, xVel = 0, yVel = 0;
 	float xScale = 1.0f, yScale = 1.0f;
-	bool active = true;
+	bool active = true, hovered = false;
 
 
 	SDL_Texture* texture = nullptr;

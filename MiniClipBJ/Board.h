@@ -18,6 +18,7 @@ public:
 	void toggleSelected(int x, int y);
 
 	int getScore() { return score; }
+	void hovering(int x, int y);
 
 private:
 	int rows, cols;
@@ -31,6 +32,9 @@ private:
 	void removePieces(std::set<std::pair<int, int>> const& pieces);
 	void drawBorders();
 	void generatePieces();
+
+
+	//std::pair<int, int> currentHover = { -1, -1 };
 
 	void updateChildren();
 	int calculateScore(int pieces);

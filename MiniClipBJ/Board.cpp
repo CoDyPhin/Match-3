@@ -50,7 +50,7 @@ int Board::calculateScore(int pieces)
 void Board::addScore(int pieces)
 {
 	int aux = calculateScore(pieces);
-	std::cout << "Added " << aux << " points" << std::endl;
+	//std::cout << "Added " << aux << " points" << std::endl;
 	score += aux;
 }
 
@@ -62,10 +62,11 @@ void Board::Update()
 	if (!var.empty()) {
 		addScore(var.size());
 		removePieces(var);
-		std::cout << "Score: " << score << std::endl;
+		//std::cout << "Score: " << score << std::endl;
 	}
 	applyGravity();
 	fillTop(true);
+	//if (currentHover.first != -1 && currentHover.second != -1 && board[currentHover.first][currentHover.second] == nullptr) currentHover = { -1, -1 };
 }
 
 void Board::resetVisited()
@@ -311,6 +312,12 @@ bool Board::isMoving()
 	}
 	return false;
 }
+
+void Board::hovering(int x, int y)
+{
+	if(x >= 0 && y >= 0) board[x][y]->setHovered(true);
+}
+
 
 
 void Board::drawBorders()
