@@ -36,10 +36,14 @@ public:
 
 	uint8_t static getSpeedTime() { return speedTime; }
 
+	int getWindowWidth() { return windowWidth; }
+	int getWindowHeight() { return windowHeight; }
+
 	static SDL_Renderer* renderer;
 
 private:
 	bool isRunning = false;
+	int windowWidth = 1024, windowHeight = 768;
 	int mouseX = 0, mouseY = 0;
 	static const uint8_t speedTime = 10; //ms
 	bool mouseClick = false, mouseDrag = false, buttonClicked = false;

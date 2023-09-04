@@ -5,7 +5,7 @@
 class Game
 {
 public:
-	Game(int rows = 8, int cols = 8);
+	Game(int windowWidth, int windowHeight, int rows = 8, int cols = 8);
 	~Game();
 
 	void Update();

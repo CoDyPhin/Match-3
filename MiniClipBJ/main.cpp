@@ -7,7 +7,7 @@ int main(int argc, char* argv[]) {
 
 	Renderer* renderer = new Renderer();
 
-	Game* game = new Game();
+	Game* game = new Game(renderer->getWindowWidth(), renderer->getWindowHeight());
 
 	while(renderer->getIsRunning())
 	{

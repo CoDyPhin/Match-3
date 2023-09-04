@@ -36,8 +36,6 @@ public:
 	int getXVel() { return xVel; }
 	int getYVel() { return yVel; }
 
-	void setParent(GameObject* p) { parent = p; }
-	void addChild(GameObject* c) { children.push_back(c); }
 	void setActive(bool a) { active = a;}
 	bool isActive() { return active; }
 
@@ -57,7 +55,5 @@ protected:
 
 	SDL_Texture* texture = nullptr;
 	SDL_Rect srcRect, destRect;
-	GameObject* parent = nullptr;
-	std::vector<GameObject*> children;
 };
 

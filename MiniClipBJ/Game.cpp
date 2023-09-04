@@ -2,10 +2,10 @@
 
 //std::vector<GameObject*> Game::gameObjects;
 
-Game::Game(int rows, int cols)
+Game::Game(int windowWidth, int windowHeight, int rows, int cols)
 {
-	board = new Board(330, 40, rows, cols);
-	hud = new HUD(40, 40);
+	hud = new HUD(10, static_cast<int>(0.2*windowHeight));
+	board = new Board((windowWidth - 660)/2, (windowHeight-660)/2, rows, cols);
 }
 
 Game::~Game()
@@ -94,6 +94,6 @@ void Game::handleInput()
 
 void Game::Update()
 {
-	board->Update();
 	hud->UpdateHUD(board->getScore());
+	board->Update();
 }

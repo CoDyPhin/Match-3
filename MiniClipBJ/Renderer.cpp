@@ -31,12 +31,14 @@ Renderer::Renderer(uint8_t displayMode, int width, int height, int xpos, int ypo
 		// check if window is null
 		if (window)
 		{
+			windowWidth = width;
+			windowHeight = height;
 			renderer = SDL_CreateRenderer(window, -1, 0);
 			// check if renderer is null
 			if (renderer)
 			{
 				isRunning = true;
-				if (SDL_SetRenderDrawColor(renderer, 57, 255, 20, 255) != 0) display_SDL_Error_info("SDL_SetRenderDrawColor"); // Gold
+				if (SDL_SetRenderDrawColor(renderer, 57, 255, 20, 255) != 0) display_SDL_Error_info("SDL_SetRenderDrawColor"); // Green
 			}
 			else display_SDL_Error_info("SDL_CreateRenderer");
 		}
