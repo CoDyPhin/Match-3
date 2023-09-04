@@ -9,7 +9,7 @@ public:
 	void Update();
 	int cornerSize, sepSize;
 	std::set<std::pair<int, int>> checkBoard();
-	void applyGravity();
+	void applyGravity(int velocity = 0);
 
 	std::pair<int, int> getPieceIndex(int xpos, int ypos);
 	bool areNeighbours(int x1, int y1, int x2, int y2);
@@ -21,7 +21,7 @@ public:
 	void hovering(int x, int y);
 
 private:
-	int rows, cols;
+	int rows, cols, pieceVelocity = 5;
 	std::vector<GameObject*> borders;
 	std::vector<std::vector<Piece*>> board;
 

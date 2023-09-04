@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-GameObject::GameObject(const char* texturePath, int startX, int startY, int w, int h, SDL_Texture* loadedTex)
+GameObject::GameObject(const char* texturePath, int startX, int startY, int w, int h, SDL_Texture* loadedTex, bool rV)
 {
 	xPos = startX;
 	yPos = startY;
@@ -32,6 +32,7 @@ GameObject::GameObject(const char* texturePath, int startX, int startY, int w, i
 	destRect.y = yPos;
 	destRect.w = width;
 	destRect.h = height;
+	requiresVelocity = rV;
 }
 
 GameObject::~GameObject()
@@ -41,11 +42,6 @@ GameObject::~GameObject()
 
 void GameObject::updateTexture(SDL_Texture* newTex)
 {
-	/*if (texture != nullptr)
-	{
-		SDL_DestroyTexture(texture);
-		texture = nullptr;
-	}*/
 	if (newTex != nullptr) {
 		texture = newTex;
 		if (SDL_QueryTexture(texture, nullptr, nullptr, &dWidth, &dHeight) != 0) std::cout << "IMG_QueryTexture failed. Error: " << SDL_GetError() << std::endl;
@@ -56,7 +52,16 @@ void GameObject::updateTexture(SDL_Texture* newTex)
 
 void GameObject::Update()
 {
-	Move();
+	if (requiresVelocity) {
+		int nMoves = (SDL_GetTicks64() - ticksSinceLastMove) / Renderer::getSpeedTime();
+		//std::cout << "Moving " << nMoves << " times" << std::endl;
+		for (int i = 0; i < nMoves; i++)
+		{
+			Move();
+			ticksSinceLastMove = SDL_GetTicks64();
+		}
+	}
+	else Move();
 	destRect.x = xPos;
 	destRect.y = yPos;
 	destRect.w = width;
@@ -120,6 +125,8 @@ void GameObject::setPosition(const int x, const int y)
 	targetY = y;
 	xPos = x;
 	yPos = y;
+	xVel = 0;
+	yVel = 0;
 }
 
 void GameObject::Scale(const float factor)

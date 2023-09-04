@@ -1,6 +1,6 @@
 #include "Piece.h"
 
-Piece::Piece(const char color, const int x, const int y, const int boardX, const int boardY) : GameObject((std::string("Assets/Color-") + color + std::string(".png")).c_str(), boardX, boardY)
+Piece::Piece(const char color, const int x, const int y, const int boardX, const int boardY) : GameObject((std::string("Assets/Color-") + color + std::string(".png")).c_str(), boardX, boardY, 1, 1, nullptr, true)
 {
 	this->color = color;
 	Translate(35, 35);

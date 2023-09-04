@@ -15,6 +15,7 @@ TextObject::TextObject(const char* fontPath, int fontSize, const char* text, SDL
 		updateText(text);
 	}
 	updateTexture(texture);
+	requiresUpdate = false;
 	if(text != nullptr) this->text = std::string(text);
 }
 
@@ -25,7 +26,7 @@ TextObject::~TextObject()
 
 void TextObject::updateText(const char* newText)
 {
-	if (requiresUpdate)
+	if (requiresUpdate || text != newText)
 	{
 		std::string const aux = std::string(newText);
 		text = aux;

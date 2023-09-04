@@ -58,14 +58,15 @@ void Board::addScore(int pieces)
 void Board::Update()
 {
 	updateChildren();
-	auto const var = checkBoard();
-	if (!var.empty()) {
-		addScore(var.size());
-		removePieces(var);
-		//std::cout << "Score: " << score << std::endl;
-	}
-	applyGravity();
 	fillTop(true);
+	applyGravity(pieceVelocity);
+	if (!isMoving()) {
+		auto const var = checkBoard();
+		if (!var.empty()) {
+			addScore(var.size());
+			removePieces(var);
+		}
+	}
 }
 
 void Board::resetVisited()
@@ -197,7 +198,7 @@ void Board::removePieces(std::set<std::pair<int, int>> const& pieces)
 	}
 }
 
-void Board::applyGravity()
+void Board::applyGravity(int velocity)
 {
 	for (int x = cols - 1; x >= 0; x--)
 	{
@@ -209,7 +210,7 @@ void Board::applyGravity()
 				{
 					if (board[x][i] != nullptr)
 					{
-						board[x][i]->moveTo(x,y,0,1);
+						board[x][i]->moveTo(x,y,0,velocity);
 						board[x][y] = board[x][i];
 						board[x][i] = nullptr;
 						//std::cout << "Moving down " << x << " " << i << std::endl;
@@ -290,8 +291,8 @@ bool Board::swapPieces(int x1, int y1, int x2, int y2)
 	{
 		board[x1][y1] = piece1;
 		board[x2][y2] = piece2;
-		piece1->moveTo(x1, y1, 1, 1);
-		piece2->moveTo(x2, y2, 1, 1);
+		piece1->moveTo(x1, y1, pieceVelocity, pieceVelocity);
+		piece2->moveTo(x2, y2, pieceVelocity, pieceVelocity);
 		return true;
 	}
 	return false;

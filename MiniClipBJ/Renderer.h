@@ -34,11 +34,14 @@ public:
 	bool buttonWasClicked() { return buttonClicked; }
 	void consumeClick() { buttonClicked = false; }
 
+	uint8_t static getSpeedTime() { return speedTime; }
+
 	static SDL_Renderer* renderer;
 
 private:
 	bool isRunning = false;
 	int mouseX = 0, mouseY = 0;
+	static const uint8_t speedTime = 10; //ms
 	bool mouseClick = false, mouseDrag = false, buttonClicked = false;
 	SDL_Window* window = nullptr;
 	SDL_Texture* bgTexture = nullptr;

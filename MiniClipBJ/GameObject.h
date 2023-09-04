@@ -10,7 +10,7 @@
 class GameObject
 {
 public:
-	GameObject(const char * texturePath = nullptr, int startX = 0, int startY = 0, int w = 1, int h = 1, SDL_Texture* loadedTex = nullptr);
+	GameObject(const char * texturePath = nullptr, int startX = 0, int startY = 0, int w = 1, int h = 1, SDL_Texture* loadedTex = nullptr, bool rV = false);
 	~GameObject();
 
 	void Update();
@@ -51,8 +51,9 @@ public:
 protected:
 	int xPos, yPos, dWidth, dHeight, width, height, targetX, targetY, xVel = 0, yVel = 0;
 	float xScale = 1.0f, yScale = 1.0f;
-	bool active = true, hovered = false;
+	bool active = true, hovered = false, requiresVelocity = false;
 
+	uint64_t ticksSinceLastMove = SDL_GetTicks64();
 
 	SDL_Texture* texture = nullptr;
 	SDL_Rect srcRect, destRect;
