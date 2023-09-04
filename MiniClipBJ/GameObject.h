@@ -10,7 +10,7 @@
 class GameObject
 {
 public:
-	GameObject(const char * texturePath = nullptr, int startX = 0, int startY = 0, int w = 0, int h = 0);
+	GameObject(const char * texturePath = nullptr, int startX = 0, int startY = 0, int w = 1, int h = 1, SDL_Texture* loadedTex = nullptr);
 	~GameObject();
 
 	void Update();
@@ -45,6 +45,8 @@ public:
 	bool isColliding(int x, int y, int w = 1, int h = 1);
 
 	void setHovered(bool hover) { hovered = hover; }
+
+	void updateTexture(SDL_Texture* newTex);
 
 protected:
 	int xPos, yPos, dWidth, dHeight, width, height, targetX, targetY, xVel = 0, yVel = 0;

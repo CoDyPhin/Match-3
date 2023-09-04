@@ -4,7 +4,8 @@
 
 Game::Game(int rows, int cols)
 {
-	board = new Board(20, 20, rows, cols);
+	board = new Board(330, 40, rows, cols);
+	hud = new HUD(40, 40);
 }
 
 Game::~Game()
@@ -94,4 +95,5 @@ void Game::handleInput()
 void Game::Update()
 {
 	board->Update();
+	hud->UpdateHUD(board->getScore());
 }

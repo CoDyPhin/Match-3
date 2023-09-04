@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-GameObject::GameObject(const char* texturePath, int startX, int startY, int w, int h)
+GameObject::GameObject(const char* texturePath, int startX, int startY, int w, int h, SDL_Texture* loadedTex)
 {
 	xPos = startX;
 	yPos = startY;
@@ -10,6 +10,11 @@ GameObject::GameObject(const char* texturePath, int startX, int startY, int w, i
 	{
 		texture = IMG_LoadTexture(Renderer::renderer, texturePath);
 		if (texture == nullptr) std::cout << "IMG_LoadTexture failed. Error: " << SDL_GetError() << std::endl;
+		if (SDL_QueryTexture(texture, nullptr, nullptr, &dWidth, &dHeight) != 0) std::cout << "IMG_QueryTexture failed. Error: " << SDL_GetError() << std::endl;
+	}
+	else if (loadedTex != nullptr)
+	{
+		texture = loadedTex;
 		if (SDL_QueryTexture(texture, nullptr, nullptr, &dWidth, &dHeight) != 0) std::cout << "IMG_QueryTexture failed. Error: " << SDL_GetError() << std::endl;
 	}
 	else
@@ -34,6 +39,21 @@ GameObject::~GameObject()
 	SDL_DestroyTexture(texture);
 }
 
+void GameObject::updateTexture(SDL_Texture* newTex)
+{
+	/*if (texture != nullptr)
+	{
+		SDL_DestroyTexture(texture);
+		texture = nullptr;
+	}*/
+	if (newTex != nullptr) {
+		texture = newTex;
+		if (SDL_QueryTexture(texture, nullptr, nullptr, &dWidth, &dHeight) != 0) std::cout << "IMG_QueryTexture failed. Error: " << SDL_GetError() << std::endl;
+		Scale(xScale, yScale);
+	}
+}
+
+
 void GameObject::Update()
 {
 	Move();
@@ -51,7 +71,7 @@ void GameObject::Update()
 
 void GameObject::Render()
 {
-	SDL_RenderCopy(Renderer::renderer, texture, &srcRect, &destRect);
+	SDL_RenderCopy(Renderer::renderer, texture, nullptr, &destRect);
 }
 
 void GameObject::Translate(const int x, const int y, const int vx, const int vy)

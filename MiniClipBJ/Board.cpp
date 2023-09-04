@@ -66,7 +66,6 @@ void Board::Update()
 	}
 	applyGravity();
 	fillTop(true);
-	//if (currentHover.first != -1 && currentHover.second != -1 && board[currentHover.first][currentHover.second] == nullptr) currentHover = { -1, -1 };
 }
 
 void Board::resetVisited()

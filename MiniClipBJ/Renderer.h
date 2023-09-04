@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <iostream>
 #include <cmath>
 
@@ -34,6 +35,7 @@ public:
 	void consumeClick() { buttonClicked = false; }
 
 	static SDL_Renderer* renderer;
+
 private:
 	bool isRunning = false;
 	int mouseX = 0, mouseY = 0;

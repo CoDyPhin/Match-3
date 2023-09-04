@@ -33,9 +33,6 @@ private:
 	void drawBorders();
 	void generatePieces();
 
-
-	//std::pair<int, int> currentHover = { -1, -1 };
-
 	void updateChildren();
 	int calculateScore(int pieces);
 	void addScore(int pieces);

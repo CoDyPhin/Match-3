@@ -44,6 +44,8 @@ Renderer::Renderer(uint8_t displayMode, int width, int height, int xpos, int ypo
 
 		bgTexture = IMG_LoadTexture(renderer, "Assets/Backdrop13.jpg");
 		if (bgTexture == nullptr) display_SDL_Error_info("IMG_LoadTexture");
+		if (TTF_Init() < 0) display_SDL_Error_info("TTF_Init");
+
 	}
 	else display_SDL_Error_info("SDL_Init");
 
@@ -111,6 +113,8 @@ void Renderer::Clean()
 	SDL_DestroyTexture(bgTexture);
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
+	IMG_Quit();
+	TTF_Quit();
 	SDL_Quit();
 }
 
