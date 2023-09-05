@@ -36,6 +36,7 @@ void Game::retrieveLevelGoals()
 	goalTime = 0;
 	oneMoveScore = 0;
 	chainScore = 0;
+	level = level % 10;
 	switch (level)
 	{
 	case 1:
@@ -212,11 +213,28 @@ bool Game::checkGameOver(int score)
 		if (hud->isTimeOver())
 		{
 			// TODO: Game over screen and save high score
+			switch (goalTime)
+			{
+			case 1:
+				menu->setScore1(score);
+				menu->setCurrentMenu(101);
+				break;
+			case 2:
+				menu->setScore2(score);
+				menu->setCurrentMenu(102);
+				break;
+			case 5:
+				menu->setScore5(score);
+				menu->setCurrentMenu(103);
+				break;
+			default:
+				break;
+			}
 			return true;
 		}
 		break;
 	case 2:
-		std::cout << "Level: " << level << std::endl << " Goal Chain: " << std::endl << chainScore << " Current Chain: " << highestChainScore << std::endl << " One Move Goal: " << oneMoveScore << " Current One Move: " << board->getMaxScoreMove() << std::endl;
+		//std::cout << "Level: " << level << std::endl << " Goal Chain: " << std::endl << chainScore << " Current Chain: " << highestChainScore << std::endl << " One Move Goal: " << oneMoveScore << " Current One Move: " << board->getMaxScoreMove() << std::endl;
 		if((score > goalScore) && (!hud->isTimeOver()) && (highestChainScore >= chainScore) && (board->getMaxScoreMove() >= oneMoveScore))
 		{
 			// TODO: Completed Challenge screen and save new level
@@ -248,7 +266,6 @@ void Game::Update()
 			delete hud;
 			board = nullptr;
 			hud = nullptr;
-			menu->setCurrentMenu(1);
 		}
 	}
 }

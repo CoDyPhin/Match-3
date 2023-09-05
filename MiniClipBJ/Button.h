@@ -12,6 +12,7 @@ public:
 
     std::string getText() { return text; }
     unsigned int getNextMenu() { return nextMenu; }
+    void setNextMenu(unsigned int nM) { nextMenu = nM; }
 
 private:
     SDL_Color bgColor;
