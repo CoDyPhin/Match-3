@@ -17,18 +17,25 @@ public:
 	void setScore2(int score);
 	void setScore5(int score);
 
+	void setLevel(unsigned int l) { levelStatus->updateText(std::string("Level " + std::to_string(level) + " Cleared").c_str()); this->level = l;  }
+
 	Button* getRetry() { return retrybtn; }
 
 	std::vector<Button*> buttons;
 	void toggleMenu();
+
 
 private:
 	std::vector<Button*> mainMenu, playMenu, timeTrialMenu, challengesMenu;
 	std::vector<TextObject*> leaderboard, timeTrialScreen;
 	std::vector<TextObject*> textObjects;
 	TextObject* highScore;
+	TextObject* levelStatus;
+	TextObject* levelFailed;
 	Button* retrybtn;
 	Button* mainMenuButton;
+	unsigned int level = 1;
+
 	int wW, wH;
 	unsigned int currentMenu = 1;
 	int score1 = 0, score2 = 0, score5 = 0;

@@ -238,16 +238,17 @@ bool Game::checkGameOver(int score)
 		}
 		break;
 	case 2:
-		//std::cout << "Level: " << level << std::endl << " Goal Chain: " << std::endl << chainScore << " Current Chain: " << highestChainScore << std::endl << " One Move Goal: " << oneMoveScore << " Current One Move: " << board->getMaxScoreMove() << std::endl;
 		if((score > goalScore) && (!hud->isTimeOver()) && (highestChainScore >= chainScore) && (board->getMaxScoreMove() >= oneMoveScore))
 		{
-			// TODO: Completed Challenge screen and save new level
 			level++;
+			level = level % 10;
+			menu->setLevel(level);
+			menu->setCurrentMenu(23);
 			return true;
 		}
 		if(hud->isTimeOver())
 		{
-			//TODO: Game over screen and retry button
+			menu->setCurrentMenu(202);
 			return true;
 		}
 		break;

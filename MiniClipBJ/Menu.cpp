@@ -21,8 +21,8 @@ Menu::Menu(int windowWidth, int windowHeight, int score1, int score2, int score5
 	timeTrialMenu.push_back(new Button("5 Minutes", 40, windowWidth / 2 - 100, 3*windowHeight / 5-50, 33));
 	timeTrialMenu.push_back(new Button("Back", 40, windowWidth / 2 - 100, 4*windowHeight / 5-50, 11));
 
-	challengesMenu.push_back(new Button("Next Level", 40, windowWidth / 2 - 100, windowHeight / 3-50, 41));
-	challengesMenu.push_back(new Button("Back", 40, windowWidth / 2 - 100, 2*windowHeight / 3-50, 11));
+	challengesMenu.push_back(new Button("Next Level", 40, windowWidth / 2 - 100, 2*windowHeight / 4-50, 41));
+	challengesMenu.push_back(new Button("Back", 40, windowWidth / 2 - 100, 3*windowHeight / 4-50, 11));
 
 
 	leaderboard.push_back(new TextObject("Assets/Fonts/bst.ttf", 40, "Under 1 minute", { 0,0,0,255 }, windowWidth / 4, windowHeight / 5 - 50));
@@ -42,6 +42,8 @@ Menu::Menu(int windowWidth, int windowHeight, int score1, int score2, int score5
 
 	retrybtn = new Button("Retry", 40, windowWidth / 2 - 85, 3*windowHeight / 5, 0, 170, 50);
 
+	levelStatus = new TextObject("Assets/Fonts/bst.ttf", 40, "Level 0 Cleared", { 0,0,0,255 }, windowWidth / 2 - 125, windowHeight / 4 - 50);
+	levelFailed = new TextObject("Assets/Fonts/bst.ttf", 40, "Level Failed", { 0,0,0,255 }, windowWidth / 2 - 100, windowHeight / 4 - 50);
 
 	toggleMenu();
 }
@@ -113,6 +115,7 @@ void Menu::toggleMenu()
 			buttons = timeTrialMenu;
 			break;
 		case 23:
+			if(level != 1) textObjects = { levelStatus };
 			buttons = challengesMenu;
 			break;
 		case 100:
@@ -123,8 +126,14 @@ void Menu::toggleMenu()
 		case 102:
 		case 103:
 			textObjects = timeTrialScreen;
-			mainMenuButton->setButtonPosition(wW / 2 - 85, 4 * wH / 5 - 25);
 			retrybtn->setButtonPosition(wW / 2 - 85, 3 * wH / 5 - 25);
+			mainMenuButton->setButtonPosition(wW / 2 - 85, 4 * wH / 5 - 25);
+			buttons = { mainMenuButton, retrybtn };
+			break;
+		case 202:
+			textObjects = { levelFailed };
+			retrybtn->setButtonPosition(wW / 2 - 85, 2 * wH / 4 - 25);
+			mainMenuButton->setButtonPosition(wW / 2 - 85, 3 * wH / 4 - 25);
 			buttons = { mainMenuButton, retrybtn };
 			break;
 		default:
