@@ -2,7 +2,10 @@
 
 Menu::Menu(int windowWidth, int windowHeight, int score1, int score2, int score5)
 {
-	mainMenuButton = new Button("Main Menu", 40, windowWidth / 2 - 100, 4 * windowHeight / 5 - 50, 1);
+	wH = windowHeight;
+	wW = windowWidth;
+
+	mainMenuButton = new Button("Main Menu", 40, windowWidth / 2 - 85, 4 * windowHeight / 5 - 25, 1, 170, 50);
 
 	mainMenu.push_back(new Button("Play", 40, windowWidth/2-100, windowHeight/4-50, 11));
 	mainMenu.push_back(new Button("Highscores", 40, windowWidth / 2 - 100, 2 * windowHeight / 4 - 50, 100));
@@ -37,7 +40,7 @@ Menu::Menu(int windowWidth, int windowHeight, int score1, int score2, int score5
 	highScore = new TextObject("Assets/Fonts/bst.ttf", 40, "0", { 0,0,0,255 }, 3*windowWidth / 4 - 100, 2*windowHeight / 5 - 50);
 	timeTrialScreen.push_back(highScore);
 
-	retrybtn = new Button("Retry", 40, windowWidth / 2 - 100, 3*windowHeight / 5);
+	retrybtn = new Button("Retry", 40, windowWidth / 2 - 85, 3*windowHeight / 5, 0, 170, 50);
 
 
 	toggleMenu();
@@ -120,10 +123,14 @@ void Menu::toggleMenu()
 		case 102:
 		case 103:
 			textObjects = timeTrialScreen;
+			mainMenuButton->setButtonPosition(wW / 2 - 85, 4 * wH / 5 - 25);
+			retrybtn->setButtonPosition(wW / 2 - 85, 3 * wH / 5 - 25);
 			buttons = { mainMenuButton, retrybtn };
 			break;
 		default:
-			buttons = {};
+			mainMenuButton->setButtonPosition(5, wH - 100);
+			retrybtn->setButtonPosition(5, wH - 200);
+			buttons = { mainMenuButton, retrybtn };
 			break;
 	}
 }

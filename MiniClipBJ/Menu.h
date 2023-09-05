@@ -17,6 +17,8 @@ public:
 	void setScore2(int score);
 	void setScore5(int score);
 
+	Button* getRetry() { return retrybtn; }
+
 	std::vector<Button*> buttons;
 	void toggleMenu();
 
@@ -27,6 +29,7 @@ private:
 	TextObject* highScore;
 	Button* retrybtn;
 	Button* mainMenuButton;
+	int wW, wH;
 	unsigned int currentMenu = 1;
 	int score1 = 0, score2 = 0, score5 = 0;
 };

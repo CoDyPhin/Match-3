@@ -13,6 +13,7 @@ public:
     std::string getText() { return text; }
     unsigned int getNextMenu() { return nextMenu; }
     void setNextMenu(unsigned int nM) { nextMenu = nM; }
+    void setButtonPosition(int x, int y) { setPosition(x, y); rect.x = x; rect.y = y; textObj->setPosition(x + (rect.w - textObj->getWidth()) / 2, y + (rect.h - textObj->getHeight()) / 2); }
 
 private:
     SDL_Color bgColor;

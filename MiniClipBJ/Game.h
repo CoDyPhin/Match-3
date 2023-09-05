@@ -25,7 +25,7 @@ private:
 
 	int goalScore = 0, goalTime = 0, oneMoveScore = 0, chainScore = 0;
 	void retrieveLevelGoals();
-	void startGame(unsigned gameMode = 0, int time = 0);
+	void startGame(unsigned int menuValue, unsigned gameMode = 0, int time = 0);
 	bool checkGameOver(int score);
 	unsigned gameMode = 0, level = 1;
 	bool canUserInput();

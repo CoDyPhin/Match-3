@@ -81,10 +81,15 @@ void Game::retrieveLevelGoals()
 
 
 
-void Game::startGame(unsigned gameMode, int time)
+void Game::startGame(unsigned int menuValue, unsigned gameMode, int time)
 {
+	delete board;
+	delete hud;
+	board = nullptr;
+	hud = nullptr;
 	scoreBeforeInput = 0;
 	highestChainScore = 0;
+	menu->getRetry()->setNextMenu(menuValue);
 	this->gameMode = gameMode;
 	if(gameMode == 2)
 	{
@@ -97,42 +102,41 @@ void Game::startGame(unsigned gameMode, int time)
 
 void Game::handleInput()
 {
-	if(board == nullptr)
+
+	for(Button* el : menu->buttons)
 	{
-		for(Button* el : menu->buttons)
+		if(el->isColliding(mouseX, mouseY))
 		{
-			if(el->isColliding(mouseX, mouseY))
+			el->setHovered(true);
+			if(mouseClick)
 			{
-				el->setHovered(true);
-				if(mouseClick)
+				std::string text = el->getText();
+				if (text == "Quit")
 				{
-					std::string text = el->getText();
-					if (text == "Quit")
-					{
-						isRunning = false;
-						return;
-					}
-					unsigned int nextMenu = el->getNextMenu();
-					menu->setCurrentMenu(nextMenu);
-					if (text == "Free Play")
-					{
-						startGame();
-					}
-					if(nextMenu > 30 && nextMenu < 34)
-					{
-						startGame(1, nextMenu - 30);
-					}
-					if(nextMenu == 41)
-					{
-						startGame(2);
-					}
-					break;
+					isRunning = false;
+					return;
 				}
+				unsigned int nextMenu = el->getNextMenu();
+				menu->setCurrentMenu(nextMenu);
+				if (text == "Free Play")
+				{
+					startGame(nextMenu);
+				}
+				if(nextMenu > 30 && nextMenu < 34)
+				{
+					startGame(nextMenu,1, nextMenu - 30);
+				}
+				if(nextMenu == 41)
+				{
+					startGame(nextMenu,2);
+				}
+				break;
 			}
-			else el->setHovered(false);
 		}
+		else el->setHovered(false);
 	}
-	else {
+
+	if(board != nullptr){
 		int score = board->getScore();
 		if (scoreBeforeInput != score)
 		{
@@ -260,7 +264,7 @@ void Game::Update()
 		board->Update();
 		int score = board->getScore();
 		hud->UpdateHUD(score);
-		if(checkGameOver(score))
+		if(checkGameOver(score) || menu->getCurrentMenu() == 1)
 		{
 			delete board;
 			delete hud;
