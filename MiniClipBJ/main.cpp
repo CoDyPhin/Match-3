@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
 
 	Game* game = new Game(renderer->getWindowWidth(), renderer->getWindowHeight());
 
-	while(renderer->getIsRunning())
+	while(renderer->getIsRunning() && game->getIsRunning())
 	{
 		//std::this_thread::sleep_for(std::chrono::milliseconds(25));
 		renderer->handleEvents();

@@ -1,6 +1,6 @@
 #include "HUD.h"
 
-HUD::HUD(int startX, int startY) : GameObject(nullptr, startX, startY)
+HUD::HUD(int startX, int startY, int gT) : GameObject(nullptr, startX, startY)
 {
 	textObjects.push_back(new TextObject("Assets/Fonts/bst.ttf", 80, "Score", {0, 0, 140, 255}, startX, startY));
 	scoreText = new TextObject("Assets/Fonts/bst.ttf", 60, "0", {0, 0, 140, 255 }, startX, startY+100);
@@ -9,7 +9,7 @@ HUD::HUD(int startX, int startY) : GameObject(nullptr, startX, startY)
 	textObjects.push_back(scoreText);
 	textObjects.push_back(timeText);
 	startTicks = SDL_GetTicks();
-	startTiming(startTicks, 5*60);
+	startTiming(startTicks, gT);
 }
 
 HUD::~HUD()
@@ -39,7 +39,6 @@ void HUD::updateScore(int score)
 
 void HUD::updateTime()
 {
-	
 	int aux = (SDL_GetTicks64() - startTicks) / 1000;
 	if(aux != elapsedTime)
 	{

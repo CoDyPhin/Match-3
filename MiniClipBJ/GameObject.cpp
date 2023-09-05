@@ -68,6 +68,7 @@ void GameObject::Update()
 	destRect.h = height;
 	if(hovered)
 	{
+		SDL_SetRenderDrawColor(Renderer::renderer, 57, 255, 20, 255); // Green
 		SDL_RenderDrawRect(Renderer::renderer, &destRect);
 		hovered = false;
 	}

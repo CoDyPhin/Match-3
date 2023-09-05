@@ -71,15 +71,12 @@ void Renderer::handleEvents()
 		if (mouseClick)
 		{
 			mouseDrag = true;
-			//std::cout << "Mouse Dragging" << std::endl;
 		}
 		SDL_GetMouseState(&mouseX, &mouseY);
-		//std::cout << "Mouse X: " << mouseX << " Mouse Y: " << mouseY << std::endl;
 		break;
 	case SDL_MOUSEBUTTONDOWN:
 		if (event.button.button == SDL_BUTTON_LEFT) {
 			mouseClick = true;
-			//std::cout << "Mouse Clicked" << std::endl;
 		}
 		break;
 	case SDL_MOUSEBUTTONUP:
@@ -89,7 +86,6 @@ void Renderer::handleEvents()
 			}
 			mouseDrag = false;
 			mouseClick = false;
-			//std::cout << "Mouse Released" << std::endl;
 		}
 		break;
 	default:

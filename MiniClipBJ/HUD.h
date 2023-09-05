@@ -6,7 +6,7 @@ class HUD :
     public GameObject
 {
 public:
-	HUD(int startX, int startY);
+	HUD(int startX, int startY, int gT = 0);
 	~HUD();
 	void UpdateHUD(int score);
 	void updateScore(int score);
