@@ -5,6 +5,8 @@
 #include <set>
 #include <chrono>
 #include <thread>
+#include <iomanip>
+#include <sstream>
 #include "Renderer.h"
 
 class GameObject
