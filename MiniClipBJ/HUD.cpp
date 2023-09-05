@@ -33,8 +33,7 @@ void HUD::UpdateHUD(int score)
 
 void HUD::updateScore(int score)
 {
-	std::string newScore = std::to_string(score);
-	scoreText->updateText(newScore.c_str());
+	scoreText->updateText(std::to_string(score).c_str());
 }
 
 void HUD::updateTime()
@@ -50,8 +49,9 @@ void HUD::updateTime()
 		{
 			elapsedTime = aux;
 		}
-		if(elapsedTime < 0)
+		if(elapsedTime <= 0)
 		{
+			timeOver = true;
 			elapsedTime = 0;
 			return;
 		}

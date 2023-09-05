@@ -18,6 +18,8 @@ public:
 	void toggleSelected(int x, int y);
 
 	int getScore() { return score; }
+	int getMaxScoreMove() { return maxMoveScore; }
+
 	void hovering(int x, int y);
 
 private:
@@ -27,7 +29,7 @@ private:
 
 	GameObject* selectedSprite;
 
-	int score = 0;
+	int score = 0, maxMoveScore = 0;
 
 	void removePieces(std::set<std::pair<int, int>> const& pieces);
 	void drawBorders();

@@ -12,6 +12,8 @@ public:
 	void updateScore(int score);
 	void updateTime();
 
+	bool isTimeOver() { return timeOver; }
+
 	void startTiming(uint64_t t, int gT = 0) { this->startTicks = t; maxTime = gT; }
 
 private:
@@ -20,5 +22,6 @@ private:
 	TextObject* timeText;
 	int elapsedTime = 0, maxTime = 0;
 	uint64_t startTicks;
+	bool timeOver = false;
 };
 

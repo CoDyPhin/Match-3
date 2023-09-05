@@ -9,9 +9,21 @@ public:
 	~Menu();
 
 	void UpdateMenu();
+	std::vector<Button*> mainMenu;
+	std::vector<Button*> playMenu;
+	std::vector<Button*> timeTrialMenu;
+	std::vector<Button*> challengesMenu;
+
+	std::vector<Button*> pauseMenu;
+	std::vector<Button*> settingsMenu;
+
+	void setCurrentMenu(unsigned int menu) { currentMenu = menu; toggleMenu(); }
+	unsigned int getCurrentMenu() { return currentMenu; }
+
 	std::vector<Button*> buttons;
-	void toggle(bool toggle);
+	void toggleMenu();
 
 private:
+	unsigned int currentMenu = 1;
 };
 

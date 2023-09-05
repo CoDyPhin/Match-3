@@ -1,6 +1,6 @@
 #include "Button.h"
 
-Button::Button(const char* text, int fontSize, int x, int y, int w, int h, SDL_Color textColor, SDL_Color bgColor) : GameObject(nullptr, x, y, w, h)
+Button::Button(const char* text, int fontSize, int x, int y, unsigned int nM, int w, int h, SDL_Color textColor, SDL_Color bgColor) : GameObject(nullptr, x, y, w, h)
 {
 	textObj = new TextObject("Assets/Fonts/bst.ttf", fontSize, text, textColor, x, y);
 
@@ -12,6 +12,7 @@ Button::Button(const char* text, int fontSize, int x, int y, int w, int h, SDL_C
 	SDL_RenderFillRect(Renderer::renderer, &rect);
 	SDL_SetRenderDrawColor(Renderer::renderer, 0, 0, 0, 255);
 	SDL_RenderDrawRect(Renderer::renderer, &rect);
+	nextMenu = nM;
 }
 
 Button::~Button()
@@ -32,7 +33,6 @@ void Button::Update()
 			SDL_SetRenderDrawColor(Renderer::renderer, bgColor.r-30, bgColor.g-30, bgColor.b-30, bgColor.a);
 		}
 		SDL_RenderFillRect(Renderer::renderer, &rect);
-		//SDL_RenderDrawRect(Renderer::renderer, &rect);
 		textObj->Update();
 	}
 }

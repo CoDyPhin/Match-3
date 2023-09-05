@@ -3,7 +3,7 @@
 
 int main(int argc, char* argv[]) {
 
-	// TODO: ADD CRUD FOR GAME SETTINGS
+	// TODO: ADD CRUD FOR GAME SAVE FILES
 
 	Renderer* renderer = new Renderer();
 
