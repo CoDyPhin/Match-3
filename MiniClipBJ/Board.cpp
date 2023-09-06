@@ -213,7 +213,6 @@ void Board::applyGravity(int velocity)
 						board[x][i]->moveTo(x,y,0,velocity);
 						board[x][y] = board[x][i];
 						board[x][i] = nullptr;
-						//std::cout << "Moving down " << x << " " << i << std::endl;
 						break;
 					}
 				}

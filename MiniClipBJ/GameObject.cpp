@@ -54,7 +54,6 @@ void GameObject::Update()
 {
 	if (requiresVelocity) {
 		int nMoves = (SDL_GetTicks64() - ticksSinceLastMove) / Renderer::getSpeedTime();
-		//std::cout << "Moving " << nMoves << " times" << std::endl;
 		for (int i = 0; i < nMoves; i++)
 		{
 			Move();

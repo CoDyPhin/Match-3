@@ -28,13 +28,11 @@ Renderer::Renderer(uint8_t displayMode, int width, int height, int xpos, int ypo
 			break;
 		}
 		window = SDL_CreateWindow("MiniClip Match-3", xpos, ypos, width, height, flags);
-		// check if window is null
 		if (window)
 		{
 			windowWidth = width;
 			windowHeight = height;
 			renderer = SDL_CreateRenderer(window, -1, 0);
-			// check if renderer is null
 			if (renderer)
 			{
 				isRunning = true;

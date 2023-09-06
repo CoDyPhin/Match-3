@@ -18,7 +18,6 @@ public:
 	void Update();
 	void Render();
 
-	//void Translate(int x = 0, int y = 0);
 	void setPosition(int x = 0, int y = 0);
 
 	void Scale(float factor);

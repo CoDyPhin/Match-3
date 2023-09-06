@@ -5,7 +5,7 @@ class Menu :
     public GameObject
 {
 public:
-	Menu(int windowWidth, int windowHeight, int score1 = 0, int score2 = 0, int score5 = 0);
+	Menu(int windowWidth, int windowHeight, int score1 = 0, int score2 = 0, int score5 = 0, unsigned int level = 1);
 	~Menu();
 
 	void UpdateMenu();
@@ -16,6 +16,10 @@ public:
 	void setScore1(int score);
 	void setScore2(int score);
 	void setScore5(int score);
+
+	int getScore1() { return score1; }
+	int getScore2() { return score2; }
+	int getScore5() { return score5; }
 
 	void setLevel(unsigned int l) { levelStatus->updateText(std::string("Level " + std::to_string(level) + " Cleared").c_str()); this->level = l;  }
 

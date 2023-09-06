@@ -2,11 +2,12 @@
 #include "Board.h"
 #include "HUD.h"
 #include "Menu.h"
+#include "SaveFiles.h"
 
 class Game
 {
 public:
-	Game(int windowWidth, int windowHeight);
+	Game(int windowWidth, int windowHeight, SaveFiles* file);
 	~Game();
 
 	void Update();
@@ -18,6 +19,7 @@ private:
 	Board* board = nullptr;
 	HUD* hud = nullptr;
 	Menu* menu = nullptr;
+	SaveFiles* file = nullptr;
 	int mouseX = 0, mouseY = 0, selectedX = -1, selectedY = -1, windowWidth, windowHeight;
 	bool mouseClick = false, mouseDrag = false, isRunning = true, wasDragging = false, failedMove = false;
 

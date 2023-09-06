@@ -1,13 +1,14 @@
 #include "Renderer.h"
 #include "Game.h"
+#include "SaveFiles.h"
 
 int main(int argc, char* argv[]) {
 
-	// TODO: ADD CRUD FOR GAME SAVE FILES
+	SaveFiles* file = new SaveFiles();
 
-	Renderer* renderer = new Renderer();
+	Renderer* renderer = new Renderer(file->getDisplayMode(),file->getWidth(),file->getHeight());
 
-	Game* game = new Game(renderer->getWindowWidth(), renderer->getWindowHeight());
+	Game* game = new Game(renderer->getWindowWidth(), renderer->getWindowHeight(), file);
 
 	while(renderer->getIsRunning() && game->getIsRunning())
 	{

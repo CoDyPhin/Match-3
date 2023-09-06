@@ -1,12 +1,13 @@
 #include "Game.h"
 
 
-Game::Game(int windowWidth, int windowHeight)
+Game::Game(int windowWidth, int windowHeight, SaveFiles* file)
 {
 	this->windowWidth = windowWidth;
 	this->windowHeight = windowHeight;
-	menu = new Menu(windowWidth, windowHeight);
-
+	this->file = file;
+	level = file->getLevel();
+	menu = new Menu(windowWidth, windowHeight, file->getHighScore1(), file->getHighScore2(), file->getHighScore5(), level);
 }
 
 Game::~Game()
@@ -87,6 +88,10 @@ void Game::startGame(unsigned int menuValue, unsigned gameMode, int time)
 	delete hud;
 	board = nullptr;
 	hud = nullptr;
+	chainScore = 0;
+	oneMovePieces = 0;
+	goalScore = 0;
+	goalTime = 0;
 	scoreBeforeInput = 0;
 	highestChainScore = 0;
 	menu->getRetry()->setNextMenu(menuValue);
@@ -133,7 +138,7 @@ void Game::handleInput()
 				}
 				if(nextMenu > 30 && nextMenu < 34)
 				{
-					startGame(nextMenu,1, nextMenu - 30);
+					startGame(nextMenu,1, nextMenu == 33 ? 5 : nextMenu - 30);
 				}
 				if(nextMenu == 41)
 				{
@@ -225,7 +230,6 @@ bool Game::checkGameOver(int score)
 	case 1:
 		if (hud->isTimeOver())
 		{
-			// TODO: Game over screen and save high score
 			switch (goalTime)
 			{
 			case 1:
@@ -243,6 +247,7 @@ bool Game::checkGameOver(int score)
 			default:
 				break;
 			}
+			file->setHighScores(menu->getScore1(), menu->getScore2(), menu->getScore5());
 			return true;
 		}
 		break;
@@ -251,6 +256,7 @@ bool Game::checkGameOver(int score)
 		{
 			level++;
 			level = level > 10 ? level % 10 : level;
+			file->setLevel(level);
 			menu->setLevel(level);
 			menu->setCurrentMenu(23);
 			return true;

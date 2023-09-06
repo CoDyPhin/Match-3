@@ -1,9 +1,14 @@
 #include "Menu.h"
 
-Menu::Menu(int windowWidth, int windowHeight, int score1, int score2, int score5)
+Menu::Menu(int windowWidth, int windowHeight, int score1, int score2, int score5, unsigned int level)
 {
+
 	wH = windowHeight;
 	wW = windowWidth;
+	this->score1 = score1;
+	this->score2 = score2;
+	this->score5 = score5;
+	this->level = level;
 
 	mainMenuButton = new Button("Main Menu", 40, windowWidth / 2 - 85, 4 * windowHeight / 5 - 25, 1, 170, 50);
 
@@ -42,7 +47,7 @@ Menu::Menu(int windowWidth, int windowHeight, int score1, int score2, int score5
 
 	retrybtn = new Button("Retry", 40, windowWidth / 2 - 85, 3*windowHeight / 5, 0, 170, 50);
 
-	levelStatus = new TextObject("Assets/Fonts/bst.ttf", 40, "Level 0 Cleared", { 0,0,0,255 }, windowWidth / 2 - 125, windowHeight / 4 - 50);
+	levelStatus = new TextObject("Assets/Fonts/bst.ttf", 40, std::string("Level " + std::to_string(level) + " Cleared").c_str(), { 0,0,0,255 }, windowWidth / 2 - 125, windowHeight / 4 - 50);
 	levelFailed = new TextObject("Assets/Fonts/bst.ttf", 40, "Level Failed", { 0,0,0,255 }, windowWidth / 2 - 100, windowHeight / 4 - 50);
 
 	levelGoals = new TextObject("Assets/Fonts/bst.ttf", 25, "Goals", { 0,0,0,255 }, windowWidth/2 + 340 , 50);
