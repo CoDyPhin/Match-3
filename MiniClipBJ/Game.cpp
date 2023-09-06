@@ -34,9 +34,9 @@ void Game::retrieveLevelGoals()
 {
 	goalScore = 0;
 	goalTime = 0;
-	oneMoveScore = 0;
+	oneMovePieces = 0;
 	chainScore = 0;
-	level = level % 10;
+	level = level > 10? level % 10 : level;
 	switch (level)
 	{
 	case 1:
@@ -47,13 +47,13 @@ void Game::retrieveLevelGoals()
 		goalTime = 1;
 		break;
 	case 3:
-		oneMoveScore = 50;
+		oneMovePieces = 4;
 		break;
 	case 4:
 		chainScore = 200;
 		break;
 	case 5:
-		oneMoveScore = 50;
+		oneMovePieces = 4;
 		goalTime = 2;
 		break;
 	case 6:
@@ -69,7 +69,7 @@ void Game::retrieveLevelGoals()
 		goalTime = 1;
 		break;
 	case 9:
-		oneMoveScore = 120;
+		oneMovePieces = 6;
 		break;
 	case 10:
 		chainScore = 300;
@@ -94,6 +94,15 @@ void Game::startGame(unsigned int menuValue, unsigned gameMode, int time)
 	if(gameMode == 2)
 	{
 		retrieveLevelGoals();
+		std::stringstream ss;
+		ss << "Level " << level << '\n' << '\n' << '\n' << "Goals" << '\n' << '\n' << '\n';
+		if(goalScore > 0) ss << "Total Score " << goalScore << '\n' << '\n';
+		if (goalTime > 0) ss << "Under " << goalTime << " minute";
+		if (goalTime > 1) ss << "s";
+		if(goalTime > 0) ss << '\n' << '\n';
+		if (oneMovePieces > 0) ss << "Break " << oneMovePieces << " pieces" << '\n' << "at once" << '\n' << '\n';
+		if(chainScore > 0) ss << chainScore << " chain" << '\n' << "reaction points";
+		menu->updateLevelGoals(ss.str());
 	}
 	if(gameMode == 1) goalTime = time;
 	board = new Board((windowWidth - 660) / 2, (windowHeight - 660) / 2);
@@ -118,7 +127,7 @@ void Game::handleInput()
 				}
 				unsigned int nextMenu = el->getNextMenu();
 				menu->setCurrentMenu(nextMenu);
-				if (text == "Free Play")
+				if (nextMenu == 21)
 				{
 					startGame(nextMenu);
 				}
@@ -238,10 +247,10 @@ bool Game::checkGameOver(int score)
 		}
 		break;
 	case 2:
-		if((score > goalScore) && (!hud->isTimeOver()) && (highestChainScore >= chainScore) && (board->getMaxScoreMove() >= oneMoveScore))
+		if((score > goalScore) && (!hud->isTimeOver()) && (highestChainScore >= chainScore) && (board->getMaxMovePieces() >= oneMovePieces))
 		{
 			level++;
-			level = level % 10;
+			level = level > 10 ? level % 10 : level;
 			menu->setLevel(level);
 			menu->setCurrentMenu(23);
 			return true;

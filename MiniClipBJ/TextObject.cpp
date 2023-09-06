@@ -24,14 +24,14 @@ TextObject::~TextObject()
 	TTF_CloseFont(font);
 }
 
-void TextObject::updateText(const char* newText)
+void TextObject::updateText(const char* newText, bool wrapped)
 {
 	if (requiresUpdate || text != newText)
 	{
 		std::string const aux = std::string(newText);
 		text = aux;
 		if (texture != nullptr) SDL_DestroyTexture(texture);
-		SDL_Surface* textSurface = TTF_RenderText_Solid(font, newText, color);
+		SDL_Surface* textSurface = wrapped ? TTF_RenderText_Blended_Wrapped(font, newText, color, 0) : TTF_RenderText_Solid(font, newText, color);
 		if (textSurface == nullptr)
 		{
 			std::cout << "Failed to render text surface! SDL_ttf Error: " << TTF_GetError() << std::endl;

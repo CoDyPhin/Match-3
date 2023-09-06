@@ -50,7 +50,7 @@ int Board::calculateScore(int pieces)
 void Board::addScore(int pieces)
 {
 	int aux = calculateScore(pieces);
-	if(aux > maxMoveScore) maxMoveScore = aux;
+	if(pieces > maxMovePieces) maxMovePieces = pieces;
 	score += aux;
 }
 

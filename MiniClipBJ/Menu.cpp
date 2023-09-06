@@ -45,6 +45,8 @@ Menu::Menu(int windowWidth, int windowHeight, int score1, int score2, int score5
 	levelStatus = new TextObject("Assets/Fonts/bst.ttf", 40, "Level 0 Cleared", { 0,0,0,255 }, windowWidth / 2 - 125, windowHeight / 4 - 50);
 	levelFailed = new TextObject("Assets/Fonts/bst.ttf", 40, "Level Failed", { 0,0,0,255 }, windowWidth / 2 - 100, windowHeight / 4 - 50);
 
+	levelGoals = new TextObject("Assets/Fonts/bst.ttf", 20, "Goals", { 0,0,0,255 }, windowWidth/2 + 350 , 20);
+
 	toggleMenu();
 }
 
@@ -98,11 +100,13 @@ void Menu::UpdateMenu()
 	{
 		t->Update();
 	}
+
 }
 
 void Menu::toggleMenu()
 {
 	textObjects = {};
+	mainMenuButton->setButtonPosition(wW / 2 - 85, 4 * wH / 5 - 25);
 	switch (currentMenu)
 	{
 		case 1:
@@ -118,6 +122,12 @@ void Menu::toggleMenu()
 			if(level != 1) textObjects = { levelStatus };
 			buttons = challengesMenu;
 			break;
+		case 41:
+			textObjects = { levelGoals };
+			mainMenuButton->setButtonPosition(5, wH - 100);
+			retrybtn->setButtonPosition(5, wH - 200);
+			buttons = { mainMenuButton, retrybtn };
+			break;
 		case 100:
 			buttons = { mainMenuButton };
 			textObjects = leaderboard;
@@ -127,7 +137,6 @@ void Menu::toggleMenu()
 		case 103:
 			textObjects = timeTrialScreen;
 			retrybtn->setButtonPosition(wW / 2 - 85, 3 * wH / 5 - 25);
-			mainMenuButton->setButtonPosition(wW / 2 - 85, 4 * wH / 5 - 25);
 			buttons = { mainMenuButton, retrybtn };
 			break;
 		case 202:

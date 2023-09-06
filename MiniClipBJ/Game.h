@@ -23,7 +23,7 @@ private:
 
 	int scoreBeforeInput = 0, highestChainScore = 0;
 
-	int goalScore = 0, goalTime = 0, oneMoveScore = 0, chainScore = 0;
+	int goalScore = 0, goalTime = 0, oneMovePieces = 0, chainScore = 0;
 	void retrieveLevelGoals();
 	void startGame(unsigned int menuValue, unsigned gameMode = 0, int time = 0);
 	bool checkGameOver(int score);

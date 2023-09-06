@@ -19,6 +19,8 @@ public:
 
 	void setLevel(unsigned int l) { levelStatus->updateText(std::string("Level " + std::to_string(level) + " Cleared").c_str()); this->level = l;  }
 
+	void updateLevelGoals(std::string goals) { levelGoals->updateText(goals.c_str(), true); }
+
 	Button* getRetry() { return retrybtn; }
 
 	std::vector<Button*> buttons;
@@ -32,6 +34,7 @@ private:
 	TextObject* highScore;
 	TextObject* levelStatus;
 	TextObject* levelFailed;
+	TextObject* levelGoals;
 	Button* retrybtn;
 	Button* mainMenuButton;
 	unsigned int level = 1;
