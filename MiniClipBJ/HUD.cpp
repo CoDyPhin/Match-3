@@ -60,6 +60,3 @@ void HUD::updateTime()
 		timeText->updateText(formattedTime.str().c_str());
 	}
 }
-
-
-

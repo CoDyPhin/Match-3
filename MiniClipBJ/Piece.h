@@ -12,12 +12,6 @@ public:
 	char getColor() { return color; }
 
 	void moveTo(int x, int y, int vx = 0, int vy = 0);
-	/*void moveLeft() { moveTo(xIndex - 1, yIndex); }
-	void moveRight() { moveTo(xIndex + 1, yIndex); }
-	void moveUp() { moveTo(xIndex, yIndex - 1); }
-	void moveDown() { moveTo(xIndex, yIndex + 1); }*/
-
-	
 
 	void setVisited(bool vertical, bool visited) { if (vertical) vVisited = visited; else hVisited = visited; }
 	bool wasVisited(bool vertical) { return vertical ? vVisited : hVisited; }

@@ -21,7 +21,6 @@ public:
 	~Renderer();
 
 	void handleEvents();
-	//void Update();
 	void RenderBackground();
 	void Display();
 	void Clean();
@@ -29,7 +28,6 @@ public:
 	bool getIsRunning() { return isRunning; }
 	int getMouseX() { return mouseX; }
 	int getMouseY() { return mouseY; }
-	//bool getMouseClick() { return mouseClick; }
 	bool mouseIsDragging() { return mouseDrag; }
 	bool buttonWasClicked() { return buttonClicked; }
 	void consumeClick() { buttonClicked = false; }

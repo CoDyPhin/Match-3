@@ -52,7 +52,18 @@ Menu::Menu(int windowWidth, int windowHeight, int score1, int score2, int score5
 
 Menu::~Menu()
 {
-
+	mainMenu.clear();
+	playMenu.clear();
+	timeTrialMenu.clear();
+	challengesMenu.clear();
+	leaderboard.clear();
+	timeTrialScreen.clear();
+	textObjects.clear();
+	delete highScore;
+	delete retrybtn;
+	delete levelStatus;
+	delete levelFailed;
+	delete levelGoals;
 }
 
 
@@ -100,7 +111,6 @@ void Menu::UpdateMenu()
 	{
 		t->Update();
 	}
-
 }
 
 void Menu::toggleMenu()
