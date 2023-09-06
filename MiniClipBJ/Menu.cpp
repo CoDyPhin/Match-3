@@ -9,6 +9,7 @@ Menu::Menu(int windowWidth, int windowHeight, int score1, int score2, int score5
 	this->score2 = score2;
 	this->score5 = score5;
 	this->level = level;
+	if (this->level <= 0) this->level = 1;
 
 	mainMenuButton = new Button("Main Menu", 40, windowWidth / 2 - 85, 4 * windowHeight / 5 - 25, 1, 170, 50);
 
@@ -47,7 +48,7 @@ Menu::Menu(int windowWidth, int windowHeight, int score1, int score2, int score5
 
 	retrybtn = new Button("Retry", 40, windowWidth / 2 - 85, 3*windowHeight / 5, 0, 170, 50);
 
-	levelStatus = new TextObject("Assets/Fonts/bst.ttf", 40, std::string("Level " + std::to_string(level) + " Cleared").c_str(), { 0,0,0,255 }, windowWidth / 2 - 125, windowHeight / 4 - 50);
+	levelStatus = new TextObject("Assets/Fonts/bst.ttf", 40, std::string("Level " + std::to_string(level-1) + " Cleared").c_str(), { 0,0,0,255 }, windowWidth / 2 - 125, windowHeight / 4 - 50);
 	levelFailed = new TextObject("Assets/Fonts/bst.ttf", 40, "Level Failed", { 0,0,0,255 }, windowWidth / 2 - 100, windowHeight / 4 - 50);
 
 	levelGoals = new TextObject("Assets/Fonts/bst.ttf", 25, "Goals", { 0,0,0,255 }, windowWidth/2 + 340 , 50);
@@ -134,7 +135,7 @@ void Menu::toggleMenu()
 			buttons = timeTrialMenu;
 			break;
 		case 23:
-			if(level != 1) textObjects = { levelStatus };
+			if(level-1 != 0) textObjects = { levelStatus };
 			buttons = challengesMenu;
 			break;
 		case 41:

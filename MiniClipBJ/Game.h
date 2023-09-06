@@ -29,7 +29,7 @@ private:
 	void retrieveLevelGoals();
 	void startGame(unsigned int menuValue, unsigned gameMode = 0, int time = 0);
 	bool checkGameOver(int score);
-	unsigned gameMode = 0, level = 1;
+	unsigned int gameMode = 0, level = 1;
 	bool canUserInput();
 };
 
