@@ -96,7 +96,7 @@ void Game::startGame(unsigned int menuValue, unsigned gameMode, int time)
 		retrieveLevelGoals();
 		std::stringstream ss;
 		ss << "Level " << level << '\n' << '\n' << '\n' << "Goals" << '\n' << '\n' << '\n';
-		if(goalScore > 0) ss << "Total Score " << goalScore << '\n' << '\n';
+		if(goalScore > 0) ss << "Total Score" << '\n' << goalScore << '\n' << '\n';
 		if (goalTime > 0) ss << "Under " << goalTime << " minute";
 		if (goalTime > 1) ss << "s";
 		if(goalTime > 0) ss << '\n' << '\n';
@@ -106,7 +106,7 @@ void Game::startGame(unsigned int menuValue, unsigned gameMode, int time)
 	}
 	if(gameMode == 1) goalTime = time;
 	board = new Board((windowWidth - 660) / 2, (windowHeight - 660) / 2);
-	hud = new HUD(10, static_cast<int>(0.2 * windowHeight), 60*goalTime);
+	hud = new HUD(10, 50, 60*goalTime);
 }
 
 void Game::handleInput()

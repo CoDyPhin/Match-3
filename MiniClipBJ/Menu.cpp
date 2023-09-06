@@ -45,7 +45,7 @@ Menu::Menu(int windowWidth, int windowHeight, int score1, int score2, int score5
 	levelStatus = new TextObject("Assets/Fonts/bst.ttf", 40, "Level 0 Cleared", { 0,0,0,255 }, windowWidth / 2 - 125, windowHeight / 4 - 50);
 	levelFailed = new TextObject("Assets/Fonts/bst.ttf", 40, "Level Failed", { 0,0,0,255 }, windowWidth / 2 - 100, windowHeight / 4 - 50);
 
-	levelGoals = new TextObject("Assets/Fonts/bst.ttf", 20, "Goals", { 0,0,0,255 }, windowWidth/2 + 350 , 20);
+	levelGoals = new TextObject("Assets/Fonts/bst.ttf", 25, "Goals", { 0,0,0,255 }, windowWidth/2 + 340 , 50);
 
 	toggleMenu();
 }
