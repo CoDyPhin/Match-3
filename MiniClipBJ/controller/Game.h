@@ -1,8 +1,8 @@
 #pragma once
 #include "Board.h"
-#include "HUD.h"
-#include "Menu.h"
-#include "SaveFiles.h"
+#include "../model/HUD.h"
+#include "../controller/Menu.h"
+#include "../utils/SaveFiles.h"
 
 class Game
 {

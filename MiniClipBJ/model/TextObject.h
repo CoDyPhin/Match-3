@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "../controller/GameObject.h"
 class TextObject :
     public GameObject
 {

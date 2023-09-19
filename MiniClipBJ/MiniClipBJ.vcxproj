@@ -163,7 +163,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\Others\boring stuff\MiniClip\SDL\SDL2_ttf-2.20.2\include;F:\Others\boring stuff\MiniClip\SDL\SDL2_image-2.6.3\include;F:\Others\boring stuff\MiniClip\SDL\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Others\boring stuff\MiniClip\Project\MiniClipBJ\MiniClipBJ\model;F:\Others\boring stuff\MiniClip\Project\MiniClipBJ\MiniClipBJ\controller;F:\Others\boring stuff\MiniClip\Project\MiniClipBJ\MiniClipBJ\utils;F:\Others\boring stuff\MiniClip\Project\MiniClipBJ\MiniClipBJ\view;F:\Others\boring stuff\MiniClip\SDL\SDL2_ttf-2.20.2\include;F:\Others\boring stuff\MiniClip\SDL\SDL2_image-2.6.3\include;F:\Others\boring stuff\MiniClip\SDL\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -194,30 +194,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Board.cpp" />
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="SaveFiles.cpp" />
-    <ClCompile Include="Menu.cpp" />
-    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="controller\Board.cpp" />
+    <ClCompile Include="controller\Game.cpp" />
+    <ClCompile Include="controller\GameObject.cpp" />
+    <ClCompile Include="controller\Menu.cpp" />
+    <ClCompile Include="model\Button.cpp" />
+    <ClCompile Include="model\HUD.cpp" />
+    <ClCompile Include="model\Piece.cpp" />
+    <ClCompile Include="model\TextObject.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Piece.cpp" />
-    <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="TextObject.cpp" />
+    <ClCompile Include="utils\SaveFiles.cpp" />
+    <ClCompile Include="view\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Board.h" />
-    <ClInclude Include="Button.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="SaveFiles.h" />
-    <ClInclude Include="Menu.h" />
-    <ClInclude Include="HUD.h" />
-    <ClInclude Include="Piece.h" />
-    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="controller\Board.h" />
+    <ClInclude Include="controller\Game.h" />
+    <ClInclude Include="controller\GameObject.h" />
+    <ClInclude Include="controller\Menu.h" />
+    <ClInclude Include="model\Button.h" />
+    <ClInclude Include="model\HUD.h" />
+    <ClInclude Include="model\Piece.h" />
+    <ClInclude Include="model\TextObject.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="TextObject.h" />
+    <ClInclude Include="utils\SaveFiles.h" />
+    <ClInclude Include="view\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MiniClipBJ.rc" />

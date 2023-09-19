@@ -7,7 +7,7 @@
 #include <thread>
 #include <iomanip>
 #include <sstream>
-#include "Renderer.h"
+#include "../view/Renderer.h"
 
 class GameObject
 {

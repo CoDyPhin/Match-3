@@ -1,6 +1,6 @@
-#include "Renderer.h"
-#include "Game.h"
-#include "SaveFiles.h"
+#include "./view/Renderer.h"
+#include "./controller/Game.h"
+#include "./utils/SaveFiles.h"
 
 int main(int argc, char* argv[]) {
 

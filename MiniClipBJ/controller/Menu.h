@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "Button.h"
+#include "../model/Button.h"
 class Menu :
     public GameObject
 {
