@@ -4,7 +4,7 @@
 Developed by Carlos Lousada, using C++ and libSDL (SDL2, SDL2_image and SDL2_TTF).
  
 
-Game Requirements Implementation:
+## Game Requirements Implementation:
 - By default, the game area is an 8x8 grid, of 5 possible objects (5 colors).
 
 - The player can interact by swapping horizontally or vertically adjacent objects, excluding diagonals. To do that, there is a piece selection system:
@@ -25,7 +25,7 @@ Game Requirements Implementation:
 
 
 
-Extra Implementation Details:
+## Extra Implementation Details:
 
 - To facilitate the user experience when playing the game, the currently selected piece is surrounded by an asset that resembles a four-dimensional arrow;
 
@@ -50,11 +50,3 @@ Extra Implementation Details:
 
 - The game has a very simplistic save and settings system implemented:
 	- There is a file (/Assets/saveFile.txt) that stores the highscores, the current level, and some simple resolution settings. THIS FILE, IF REQUIRED, SHOULD BE TAMPERED WITH VERY CAREFULLY. The minimum supported width and height are, respectively, 1024px and 680px. The default resolution has the same resolution as the background image (1024x768). To change these values, edit the two last values of the file. The game also supports 4 different display modes: Windowed (0), Fullscreen (1), Screen Native Fullscreen (2) and Borderless (3). To alternated between these, change the value that is on top of the resolution values (default is 0). The remaining top 4 values are, respectively, the highest score in under 1 minute, 2 minutes, 5 minutes and the current level. 
-
-
-Any additional questions or details, contact me via:
-Email: carlosdaniel.rl@gmail.com
-Phone number: +351 911 787 408
-LinkedIn: https://www.linkedin.com/in/carloslousada00/
-
-My GitHub: https://github.com/CoDyPhin
